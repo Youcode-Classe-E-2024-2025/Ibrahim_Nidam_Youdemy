@@ -50,3 +50,60 @@ CREATE TABLE IF NOT EXISTS course_tags (
     FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
     FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
 );
+
+-- Insert Users (Admin, Teachers, Students, Visitors)
+INSERT INTO users (name, email, password, role, is_active) VALUES
+('Admin User', 'a@y.com', '$2a$12$5snq9l/oHpX1ECB62HJSaOZWCRm3rOWTxaifdbW.C9jxLM11MbiEO', 'admin', TRUE),
+('John Teacher', 't1@y.com', '$2a$12$5snq9l/oHpX1ECB62HJSaOZWCRm3rOWTxaifdbW.C9jxLM11MbiEO', 'teacher', TRUE),
+('Jane Teacher', 't2@y.com', '$2a$12$5snq9l/oHpX1ECB62HJSaOZWCRm3rOWTxaifdbW.C9jxLM11MbiEO', 'teacher', TRUE),
+('Alice Student', 's1@y.com', '$2a$12$5snq9l/oHpX1ECB62HJSaOZWCRm3rOWTxaifdbW.C9jxLM11MbiEO', 'student', TRUE),
+('Bob Student', 's2@y.com', '$2a$12$5snq9l/oHpX1ECB62HJSaOZWCRm3rOWTxaifdbW.C9jxLM11MbiEO', 'student', TRUE),
+('Charlie Student', 's3@y.com', '$2a$12$5snq9l/oHpX1ECB62HJSaOZWCRm3rOWTxaifdbW.C9jxLM11MbiEO', 'student', TRUE);
+
+-- Insert Categories
+INSERT INTO categories (name) VALUES
+('Programming'),
+('Design'),
+('Data Science'),
+('Business'),
+('Marketing');
+
+-- Insert Tags
+INSERT INTO tags (name) VALUES
+('Python'),
+('JavaScript'),
+('Web Development'),
+('Graphic Design'),
+('Machine Learning'),
+('UI/UX'),
+('Leadership'),
+('SEO');
+
+-- Insert Courses (created by teachers)
+INSERT INTO courses (teacher_id, title, description, content_type, content_path, category_id) VALUES
+(2, 'Python for Beginners', 'Learn the basics of Python programming', 'video', 'path/to/python-course.mp4', 1),
+(2, 'Web Development 101', 'Introduction to HTML, CSS, and JavaScript', 'document', 'path/to/web-dev-guide.pdf', 1),
+(3, 'Graphic Design Masterclass', 'Become a pro at graphic design using Adobe tools', 'video', 'path/to/design-course.mp4', 2),
+(3, 'Leadership Skills', 'Learn leadership skills for managers and professionals', 'document', 'path/to/leadership-guide.pdf', 4),
+(2, 'Machine Learning Essentials', 'Introduction to machine learning concepts and techniques', 'video', 'path/to/ml-course.mp4', 3);
+
+-- Insert Course Tags (many-to-many)
+INSERT INTO course_tags (course_id, tag_id) VALUES
+(1, 1),  -- Python for Beginners -> Python
+(1, 3),  -- Python for Beginners -> Web Development
+(2, 2),  -- Web Development 101 -> JavaScript
+(2, 3),  -- Web Development 101 -> Web Development
+(3, 4),  -- Graphic Design Masterclass -> Graphic Design
+(3, 6),  -- Graphic Design Masterclass -> UI/UX
+(4, 7),  -- Leadership Skills -> Leadership
+(5, 5);  -- Machine Learning Essentials -> Machine Learning
+
+-- Insert Enrollments (students enrolling in courses)
+INSERT INTO enrollments (course_id, student_id) VALUES
+(1, 4),  -- Alice Student enrolls in Python for Beginners
+(1, 5),  -- Bob Student enrolls in Python for Beginners
+(2, 4),  -- Alice Student enrolls in Web Development 101
+(2, 6),  -- Charlie Student enrolls in Web Development 101
+(3, 5),  -- Bob Student enrolls in Graphic Design Masterclass
+(4, 6),  -- Charlie Student enrolls in Leadership Skills
+(5, 4);  -- Alice Student enrolls in Machine Learning Essentials
