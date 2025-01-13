@@ -1,0 +1,15 @@
+{
+    "name": "ibrahim/youdemy",
+    "autoload": {
+        "psr-4": {
+            "Ibrahim\\Youdemy\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ibrahim-Nidam",
+            "email": "ibrahim.nidam22@gmail.com"
+        }
+    ],
+    "require": {}
+}
