@@ -1,0 +1,18 @@
+# Enable URL rewriting
+RewriteEngine On
+
+# Redirect all requests to index.php for routing
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [L,QSA]
+
+# Prevent access to .env and sensitive files
+<Files .env>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<FilesMatch "\.(log|json)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>

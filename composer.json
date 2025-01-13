@@ -2,7 +2,12 @@
     "name": "ibrahim/youdemy",
     "autoload": {
         "psr-4": {
-            "Ibrahim\\Youdemy\\": "src/"
+            "Controller\\": "app/Controllers/",
+            "Model\\": "app/Models/",
+            "Core\\": "app/Core/",
+            "Security\\": "app/Core/Security",
+            "Middleware\\": "app/Middleware/",
+            "Connection\\" : "Config/"
         }
     },
     "authors": [
