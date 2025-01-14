@@ -4,32 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Not Found</title>
-    <link rel="stylesheet" href="/assets/css/403.css">
+    <link rel="stylesheet" href="assets/css/404.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
     <!-- about -->
 <div class="about">
-   <a class="bg_links social portfolio" href="https://www.rafaelalucas.com" target="_blank">
-      <span class="icon"></span>
-   </a>
-   <a class="bg_links social dribbble" href="https://dribbble.com/rafaelalucas" target="_blank">
-      <span class="icon"></span>
-   </a>
-   <a class="bg_links social linkedin" href="https://www.linkedin.com/in/rafaelalucas/" target="_blank">
-      <span class="icon"></span>
-   </a>
-   <a class="bg_links logo"></a>
+    <a class="bg_links logo"></a>
 </div>
 <!-- end about -->
 
     <nav>
         <div class="menu">
             <p class="website_name">LOGO</p>
-            <div class="menu_links">
-                <a href="" class="link">about</a>
-                <a href="" class="link">projects</a>
-                <a href="" class="link">contacts</a>
-            </div>
+            
             <div class="menu_icon">
                 <span class="icon"></span>
             </div>
@@ -76,14 +64,14 @@
 
             <div class="text">
                 <article>
-                    <p>Uh oh! Looks like you got lost. <br>Go back to the homepage if you dare!</p>
-                    <button>i dare!</button>
+                    <p>Uh oh! Looks like you got lost. <br>Go back to the homepage!</p>
+                    <a href="#" class="px-4 py-2 bg-white rounded-full">Home!</a>
                 </article>
             </div>
 
         </div>
     </section>
 
-    <script src="/assets/js/404.js"></script>
+    <script src="assets/js/404.js"></script>
 </body>
 </html>

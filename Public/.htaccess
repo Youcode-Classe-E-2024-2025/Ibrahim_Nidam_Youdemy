@@ -1,7 +1,11 @@
 # Enable URL rewriting
 RewriteEngine On
 
-# Redirect all requests to index.php for routing
+# Allow access to the 'assets' folder (CSS, JS, images)
+RewriteCond %{REQUEST_URI} ^/assets/ [NC]
+RewriteRule ^ - [L]
+
+# Redirect all other requests to index.php for routing
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php [L,QSA]
