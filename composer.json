@@ -3,13 +3,16 @@
     "autoload": {
         "psr-4": {
             "Controller\\": "app/Controllers/",
-            "Users\\": "app/Controllers/users",
+            "Users\\": "app/Controllers/users/",
             "Model\\": "app/Models/",
             "Core\\": "app/Core/",
-            "Security\\": "app/Core/Security",
+            "Security\\": "app/Core/Security/",
             "Middleware\\": "app/Middleware/",
-            "Connection\\" : "Config/"
-        }
+            "Connection\\": "Config/"
+        },
+        "files": [
+            "app/Core/helpers.php"
+        ]
     },
     "authors": [
         {

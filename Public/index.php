@@ -3,11 +3,10 @@
 use Controller\HomeController;
 use Core\App;
 
-    require_once __DIR__ . '/../vendor/autoload.php';
-    require_once __DIR__ . '/../app/Core/helpers.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-    $app = new App();
+$app = new App();
 
-    require_once __DIR__ . '/../config/routes.php';
+require_once __DIR__ . '/../config/routes.php';
 
-    $app->run();
+$app->run();
