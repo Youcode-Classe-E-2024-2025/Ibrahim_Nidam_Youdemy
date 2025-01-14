@@ -77,14 +77,14 @@
     </script>
 
 </head>
-
 <body class="bg-background font-sans">
+
     <!-- Navbar -->
     <nav class="bg-card shadow-sm fixed w-full z-50">
         <div class="container mx-auto px-4 py-3 flex items-center justify-between">
             <div class="text-2xl font-bold text-primary">Youdemy</div>
             <div class="hidden md:flex space-x-6">
-                <a href="#" class="text-foreground hover:text-primary">Courses</a>
+                <a href="coursesPage" class="text-foreground hover:text-primary">Courses</a>
                 <a href="#" class="text-foreground hover:text-primary">Categories</a>
                 <a href="#" class="text-foreground hover:text-primary">Teach</a>
             </div>

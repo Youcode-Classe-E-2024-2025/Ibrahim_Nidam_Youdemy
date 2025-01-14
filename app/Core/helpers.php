@@ -1,6 +1,5 @@
 <?php
 
-    namespace Core;
 
     if(!function_exists("dd")){
         function dd(...$vars){
