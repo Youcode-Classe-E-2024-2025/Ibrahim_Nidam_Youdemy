@@ -14,6 +14,8 @@
         }
 
         public function route($uri, $method){
+            // $uri = rtrim(parse_url($uri, PHP_URL_PATH), '/');
+            // echo "Routing: {$uri} with method: {$method}";
             
             if(array_key_exists($method, $this->routes) && array_key_exists($uri, $this->routes[$method])){
                 $controller = $this->routes[$method][$uri];
@@ -25,7 +27,7 @@
                 }
             }
 
-            $this->handleError(403);
+            $this->handleError(404);
         }
 
         public function handleError($code){

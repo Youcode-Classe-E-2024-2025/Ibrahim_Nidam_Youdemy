@@ -8,6 +8,9 @@
             extract($data);
 
             $viewPath = __DIR__ . "/../../app/Views/{$view}.php";
+
+            // var_dump("Attempting to load view from: " . $viewPath);
+            // var_dump("View exists: " . (file_exists($viewPath) ? 'Yes' : 'No'));
             
             if(file_exists($viewPath)){
                 require_once $viewPath;
