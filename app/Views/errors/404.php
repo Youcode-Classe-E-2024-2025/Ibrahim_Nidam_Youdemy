@@ -8,12 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <!-- about -->
-<div class="about">
-    <a class="bg_links logo"></a>
-</div>
-<!-- end about -->
-
     <nav>
         <div class="menu">
             <p class="website_name">LOGO</p>
@@ -24,7 +18,7 @@
         </div>
     </nav>
 
-    <section class="wrapper">
+    <section class="wrapper overflow-hidden">
 
         <div class="container">
 
