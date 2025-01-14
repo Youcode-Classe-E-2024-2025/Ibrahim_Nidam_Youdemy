@@ -1,5 +1,3 @@
 /vendor/
 node_modules/
 .env
-
-app/Views/home.php
