@@ -96,9 +96,6 @@
 
     <!-- Hero Section -->
     <section class="relative h-screen flex items-center justify-center overflow-hidden">
-        <video autoplay loop muted class="absolute w-full h-full object-cover">
-            <source src="https://player.vimeo.com/external/434045526.sd.mp4?s=c27ebe7ec1c6bab198895f2e66a3d4fc29e2ae75&profile_id=164" type="video/mp4">
-        </video>
         <div class="absolute inset-0 bg-foreground bg-opacity-60"></div>
         <div class="relative text-center px-4">
             <h1 class="text-6xl md:text-7xl font-bold text-primary-foreground mb-6">Learn Without Limits</h1>
