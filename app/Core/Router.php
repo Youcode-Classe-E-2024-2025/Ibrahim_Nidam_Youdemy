@@ -25,7 +25,7 @@
                 }
             }
 
-            $this->handleError(404);
+            $this->handleError(403);
         }
 
         public function handleError($code){
