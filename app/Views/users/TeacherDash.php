@@ -1,89 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher's Dashboard - Youdemy</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
 
-    <script>
-        tailwind.config = {
-            theme: {
-            extend: {
-                colors: {
-                primary: {
-                    DEFAULT: "#E11D48",
-                    foreground: "#FFFFFF"
-                },
-                secondary: {
-                    DEFAULT: "#F0F1F3",
-                    foreground: "#020817"
-                },
-                accent: {
-                    DEFAULT: "#6D7074",
-                    foreground: "#020817"
-                },
-                background: "#FAFAFB",
-                foreground: "#020817",
-                card: {
-                    DEFAULT: "#FFFFFF",
-                    foreground: "#020817"
-                },
-                popover: {
-                    DEFAULT: "#FFFFFF",
-                    foreground: "#020817"
-                },
-                muted: {
-                    DEFAULT: "#F0F1F3",
-                    foreground: "#6D7074"
-                },
-                destructive: {
-                    DEFAULT: "#FF4C4C",
-                    foreground: "#FFFFFF"
-                },
-                border: "#E0E0E0",
-                input: "#E0E0E0",
-                ring: "#E11D48",
-                chart: {
-                    1: "#FF6F61",
-                    2: "#4CAF50",
-                    3: "#03A9F4",
-                    4: "#FFC107",
-                    5: "#8E44AD"
-                }
-                },
-                fontFamily: {
-                sans: ["Inter", "sans-serif"]
-                },
-                fontSize: {
-                heading: "28px",
-                body: "16px"
-                },
-                fontWeight: {
-                heading: "600",
-                body: "400"
-                },
-                borderRadius: {
-                sm: "0.125rem"
-                },
-                boxShadow: {
-                sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)"
-                }
-            }
-            },
-            darkMode: "class"
-        }
-    </script>
-<style>
-        .chosen-container {
-            width: 100% !important;
-        }
-    </style>
-</head>
+<?php 
+$pageTitle = "Teacher's Dashboard - Youdemy";
+require_once realpath(__DIR__ . '/../layout/header.php');
+?>
 
 <body class="bg-background font-sans">
     <!-- Navbar -->
@@ -215,36 +134,10 @@
 
     </main>
 
-    <footer class="bg-card py-6 text-center text-accent">
-        <p>© <?= date("Y") ?> Youdemy. All rights reserved.</p>
-    </footer>
+    <?php require_once realpath(__DIR__ . '/../layout/footer.php'); ?>
 
-    <script>
-        function toggleContentType(type) {
-            const videoBtn = document.getElementById("videoBtn");
-            const documentBtn = document.getElementById("documentBtn");
-            const contentTypeInput = document.getElementById("contentTypeInput");
 
-            if (type === 'video') {
-                contentTypeInput.value = 'video';
-                videoBtn.classList.add("bg-primary", "text-white");
-                videoBtn.classList.remove("bg-gray-200", "text-gray-800");
 
-                documentBtn.classList.add("bg-gray-200", "text-gray-800");
-                documentBtn.classList.remove("bg-primary", "text-white");
-            } else {
-                contentTypeInput.value = 'document';
-                documentBtn.classList.add("bg-primary", "text-white");
-                documentBtn.classList.remove("bg-gray-200", "text-gray-800");
-
-                videoBtn.classList.add("bg-gray-200", "text-gray-800");
-                videoBtn.classList.remove("bg-primary", "text-white");
-            }
-        }
-
-        $(document).ready(function () {
-            $(".chosen-select").chosen();
-        });
-    </script>
+    <script src="../../Public/assets/js/teacherDash.js"></script>
 </body>
 </html>

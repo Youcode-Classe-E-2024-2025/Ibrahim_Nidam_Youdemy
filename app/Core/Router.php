@@ -16,6 +16,9 @@
         public function route($uri, $method){
             // $uri = rtrim(parse_url($uri, PHP_URL_PATH), '/');
             // echo "Routing: {$uri} with method: {$method}";
+            // class_exists && method_exists
+            // $controller = new Controller()
+            // call_user_func([$controller, $method]);
             
             if(array_key_exists($method, $this->routes) && array_key_exists($uri, $this->routes[$method])){
                 $controller = $this->routes[$method][$uri];
@@ -23,7 +26,7 @@
                 if(is_array($controller)){
                     [$class, $method] = $controller;
                     $controller = new $class();
-                    return $controller->$method();
+                    return call_user_func([$controller, $method]);
                 }
             }
 
