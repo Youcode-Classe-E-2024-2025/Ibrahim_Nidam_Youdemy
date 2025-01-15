@@ -69,7 +69,14 @@
                 },
                 boxShadow: {
                 sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)"
-                }
+                },
+                scale: {
+                '0': '0',
+                '100': '1',
+            },
+            transitionDuration: {
+                '200': '200ms',
+            },
             }
             },
             darkMode: "class"
@@ -77,20 +84,18 @@
     </script>
 
 </head>
-<body class="bg-background font-sans">
+<body class="bg-background font-sans m-0">
 
     <!-- Navbar -->
     <nav class="bg-card shadow-sm fixed w-full z-50">
         <div class="container mx-auto px-4 py-3 flex items-center justify-between">
             <div class="text-2xl font-bold text-primary">Youdemy</div>
             <div class="hidden md:flex space-x-6">
+                <input type="hidden" name="">
                 <a href="coursesPage" class="text-foreground hover:text-primary">Courses</a>
-                <a href="#" class="text-foreground hover:text-primary">Categories</a>
-                <a href="#" class="text-foreground hover:text-primary">Teach</a>
+                <a href="404" class="text-foreground hover:text-primary">Categories</a>
             </div>
-            <div class="flex items-center space-x-4">
-                <button class="px-4 py-2 text-primary-foreground bg-primary rounded hover:bg-opacity-90">Sign In</button>
-            </div>
+            <?php require_once "layout/login_signup_forms.php" ?>
         </div>
     </nav>
 
@@ -273,5 +278,6 @@
         </div>
         <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-8 right-8 bg-primary text-primary-foreground p-4 rounded-full shadow-lg hover:bg-opacity-90 transition">↑</button>
     </footer>
+
 </body>
 </html>
