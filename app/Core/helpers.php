@@ -23,3 +23,29 @@
             echo "</pre>";
         }
     }
+
+function generateStars($rating) {
+    $fullStars = floor($rating); // Number of full stars
+    $halfStar = ($rating - $fullStars) >= 0.5; // Check if a half star is needed
+    $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0); // Remaining empty stars
+
+    $stars = '';
+
+    // Full stars
+    for ($i = 0; $i < $fullStars; $i++) {
+        $stars .= '★';
+    }
+
+    // Half star
+    if ($halfStar) {
+        $stars .= '½';
+    }
+
+    // Empty stars
+    for ($i = 0; $i < $emptyStars; $i++) {
+        $stars .= '☆';
+    }
+
+    return $stars;
+}
+?>
