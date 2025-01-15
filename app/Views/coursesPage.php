@@ -81,11 +81,7 @@
     <nav class="bg-card shadow-sm w-full z-50">
         <div class="container mx-auto px-4 py-3 flex items-center justify-between">
             <a href="../Public" class="text-2xl font-bold text-primary">Youdemy</a>
-            <div class="hidden md:flex space-x-6">
-                <a href="#" class="text-foreground hover:text-primary">Home</a>
-                <a href="#courses" class="text-foreground hover:text-primary">Courses</a>
-                <a href="#" class="text-foreground hover:text-primary">Categories</a>
-            </div>
+            
             <div class="flex items-center space-x-4">
                 <button class="px-4 py-2 text-primary-foreground bg-primary rounded hover:bg-opacity-90">Sign In</button>
             </div>
