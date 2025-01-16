@@ -13,9 +13,17 @@ require_once realpath(__DIR__ . '/layout/header.php');
             <input type="hidden" name="">
             <a href="coursesPage" class="text-foreground hover:text-primary">Courses</a>
             <a href="404" class="text-foreground hover:text-primary">Categories</a>
-            <a href="users/AdminDash" class="text-foreground hover:text-primary">Categories</a>
+            <?php if(isset($_SESSION["user_id"])): ?>
+                <a href="users/<?= $_SESSION["user_role"] == "admin" ? "AdminDash" : ($_SESSION["user_role"] == "teacher" ? "TeacherDash" : "StudentProfile") ?>" class="text-foreground hover:text-primary">Dashboard</a>
+            <?php endif; ?>
         </div>
+        <?php if(!isset($_SESSION["user_id"])): ?>
         <?php require_once "layout/login_signup_forms.php" ?>
+        <?php else:?>
+            <div class="flex items-center space-x-4">
+                <a href="" class="px-4 py-2 text-primary-foreground bg-primary rounded hover:bg-opacity-90">Logout</a>
+            </div>
+        <?php endif; ?>
     </div>
 </nav>
 
@@ -50,37 +58,6 @@ require_once realpath(__DIR__ . '/layout/header.php');
                 </div>
             </div>
             
-            <div class="bg-card rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713" alt="Data Science" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <span class="bg-chart-3 text-primary-foreground text-sm px-2 py-1 rounded">NEW</span>
-                    <h3 class="text-lg font-semibold mt-2">Data Science Masterclass</h3>
-                    <p class="text-accent mt-1">Master data science and machine learning</p>
-                    <div class="mt-4 flex items-center justify-between">
-                        <span class="text-primary font-semibold">$99.99</span>
-                        <div class="flex items-center">
-                            <span class="text-chart-4">4.9</span>
-                            <span class="text-chart-4 ml-1">★★★★★</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-card rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1551434678-e076c223a692" alt="UX Design" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <span class="bg-chart-2 text-primary-foreground text-sm px-2 py-1 rounded">TRENDING</span>
-                    <h3 class="text-lg font-semibold mt-2">UX Design Fundamentals</h3>
-                    <p class="text-accent mt-1">Create amazing user experiences</p>
-                    <div class="mt-4 flex items-center justify-between">
-                        <span class="text-primary font-semibold">$79.99</span>
-                        <div class="flex items-center">
-                            <span class="text-chart-4">4.7</span>
-                            <span class="text-chart-4 ml-1">★★★★★</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </section>

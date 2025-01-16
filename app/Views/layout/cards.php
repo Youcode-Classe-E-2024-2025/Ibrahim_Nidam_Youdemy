@@ -2,7 +2,7 @@
 function renderCard($data) {
     ?>
     <div class="bg-card rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition">
-        <img src="<?php echo $data['image']; ?>" alt="<?php echo $data['title']; ?>" class="w-full h-48 object-cover">
+    <img src="https://picsum.photos/400/300?random=<?php echo rand(1, 1000); ?>" alt="<?php echo $data['title']; ?>" class="w-full h-48 object-cover">
         <div class="p-4">
             <span class="bg-destructive text-destructive-foreground text-sm px-2 py-1 rounded"><?php echo $data['badge']; ?></span>
             <h3 class="text-lg font-semibold mt-2"><?php echo $data['title']; ?></h3>
@@ -18,4 +18,3 @@ function renderCard($data) {
     </div>
     <?php
 }
-?>

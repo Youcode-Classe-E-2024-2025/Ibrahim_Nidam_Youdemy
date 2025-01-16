@@ -9,12 +9,11 @@ require_once realpath(__DIR__ . '/../layout/header.php');
     <div class="container mx-auto px-4 py-3 flex items-center justify-between">
         <div class="text-2xl font-bold text-primary">Youdemy</div>
         <div class="hidden md:flex space-x-6">
-            <a href="#" class="text-foreground hover:text-primary">Courses</a>
-            <a href="#" class="text-foreground hover:text-primary">Categories</a>
-            <a href="#" class="text-foreground hover:text-primary">Teach</a>
+            <a href="../../Public" class="text-foreground hover:text-primary">Home</a>
+            <a href="../coursesPage" class="text-foreground hover:text-primary">Courses</a>
         </div>
         <div class="flex items-center space-x-4">
-            <button class="px-4 py-2 text-primary-foreground bg-primary rounded hover:bg-opacity-90">Sign In</button>
+                <a href="" class="px-4 py-2 text-primary-foreground bg-primary rounded hover:bg-opacity-90">Logout</a>
         </div>
     </div>
 </nav>
@@ -42,10 +41,11 @@ require_once realpath(__DIR__ . '/../layout/header.php');
             <p class="text-3xl font-bold text-chart-4">23</p>
             <p class="text-muted-foreground mt-2">5 new this week</p>
         </div>
+        <!-- Pending Courses Card -->
         <div class="bg-card p-6 rounded-sm shadow-sm border border-border">
-            <h3 class="text-accent-foreground mb-2">Pending Requests</h3>
-            <p class="text-3xl font-bold text-chart-4">23</p>
-            <p class="text-muted-foreground mt-2">5 new this week</p>
+            <h3 class="text-accent-foreground mb-2">Pending Courses</h3>
+            <p class="text-3xl font-bold text-chart-5">5</p>
+            <p class="text-muted-foreground mt-2">4 new this week</p>
         </div>
     </div>
 </div>
@@ -59,6 +59,43 @@ require_once realpath(__DIR__ . '/../layout/header.php');
                 <tr class="border-b border-border">
                     <th class="text-left py-4 px-4 font-heading w-1/4">Name</th>
                     <th class="text-left py-4 px-4 font-heading w-1/4">Email</th>
+                    <th class="text-left py-4 px-4 font-heading w-1/4">Status</th>
+                    <th class="text-left py-4 px-4 font-heading w-1/4">Actions</th>
+                </tr>
+            </thead>
+        </table>
+        <!-- Scrollable tbody -->
+        <div class="max-h-64 overflow-y-auto">
+            <table class="w-full table-fixed">
+                <tbody>
+                    <tr class="border-b border-border">
+                        <td class="py-4 px-4 w-1/4">John Doe</td>
+                        <td class="py-4 px-4 w-1/4">john@example.com</td>
+                        <td class="py-4 px-4 w-1/4">
+                            <span class="bg-chart-4/20 text-chart-4 px-2 py-1 rounded-sm w-20 text-center block">Pending</span>
+                        </td>
+                        <td class="py-4 px-4 w-1/4">
+                            <div>
+                                <button class="bg-chart-2 text-white px-4 py-1 rounded-sm mb-2">Approve</button>
+                                <button class="bg-destructive text-white px-4 py-1 rounded-sm">Reject</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Pending Courses -->
+<div class="bg-card p-6 rounded-sm shadow-sm mb-8">
+    <h2 class="text-heading font-heading mb-6">Pending Courses Applications</h2>
+    <div class="overflow-x-auto">
+        <table class="w-full table-fixed">
+            <thead>
+                <tr class="border-b border-border">
+                    <th class="text-left py-4 px-4 font-heading w-1/4">Course Title</th>
+                    <th class="text-left py-4 px-4 font-heading w-1/4">Teacher Email</th>
                     <th class="text-left py-4 px-4 font-heading w-1/4">Status</th>
                     <th class="text-left py-4 px-4 font-heading w-1/4">Actions</th>
                 </tr>

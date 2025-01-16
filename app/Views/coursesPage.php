@@ -5,15 +5,26 @@ require_once realpath(__DIR__ . '/layout/header.php');
 
 <body class="bg-background font-sans">
     <!-- Navbar -->
-    <nav class="bg-card shadow-sm w-full z-50">
-        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-            <a href="../Public" class="text-2xl font-bold text-primary">Youdemy</a>
-            
-            <div class="flex items-center space-x-4">
-                <button class="px-4 py-2 text-primary-foreground bg-primary rounded hover:bg-opacity-90">Sign In</button>
-            </div>
+<nav class="bg-card shadow-sm fixed w-full z-50">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="text-2xl font-bold text-primary">Youdemy</div>
+        <div class="hidden md:flex space-x-6">
+            <input type="hidden" name="">
+            <a href="../Public" class="text-foreground hover:text-primary">Home</a>
+            <a href="404" class="text-foreground hover:text-primary">Categories</a>
+            <?php if(isset($_SESSION["user_id"])): ?>
+                <a href="users/<?= $_SESSION["user_role"] == "admin" ? "AdminDash" : ($_SESSION["user_role"] == "teacher" ? "TeacherDash" : "StudentProfile") ?>" class="text-foreground hover:text-primary">Dashboard</a>
+            <?php endif; ?>
         </div>
-    </nav>
+        <?php if(!isset($_SESSION["user_id"])): ?>
+        <?php require_once "layout/login_signup_forms.php" ?>
+        <?php else:?>
+            <div class="flex items-center space-x-4">
+                <a href="" class="px-4 py-2 text-primary-foreground bg-primary rounded hover:bg-opacity-90">Logout</a>
+            </div>
+        <?php endif; ?>
+    </div>
+</nav>
 
     <!-- Hero Section -->
     <section class="h-64 flex flex-col items-center justify-center bg-primary text-center">
@@ -67,7 +78,7 @@ require_once realpath(__DIR__ . '/layout/header.php');
     </section>
 
     <!-- Pagination -->
-    <div class="container mx-auto px-4 flex justify-center mt-8">
+    <div class="container mx-auto px-4 flex justify-center my-12">
         <nav class="inline-flex items-center space-x-2">
             <button class="px-4 py-2 bg-card border border-border text-accent rounded hover:bg-muted">Previous</button>
             <button class="px-4 py-2 bg-primary text-white rounded">1</button>
@@ -77,12 +88,8 @@ require_once realpath(__DIR__ . '/layout/header.php');
         </nav>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-card py-12 mt-12">
-        <div class="container mx-auto px-4 text-center text-accent">
-            <p>© <?= date("Y") ?> Youdemy. All rights reserved.</p>
-        </div>
-    </footer>
+    <?php require_once "layout/footer.php" ?>
+
 </body>
 
 </html>

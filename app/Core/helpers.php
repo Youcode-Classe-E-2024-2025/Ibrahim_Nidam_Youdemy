@@ -25,27 +25,47 @@
     }
 
 function generateStars($rating) {
-    $fullStars = floor($rating); // Number of full stars
-    $halfStar = ($rating - $fullStars) >= 0.5; // Check if a half star is needed
-    $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0); // Remaining empty stars
+    $fullStars = floor($rating);
+    $halfStar = ($rating - $fullStars) >= 0.5;
+    $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
 
     $stars = '';
 
-    // Full stars
     for ($i = 0; $i < $fullStars; $i++) {
         $stars .= '★';
     }
 
-    // Half star
     if ($halfStar) {
         $stars .= '½';
     }
 
-    // Empty stars
     for ($i = 0; $i < $emptyStars; $i++) {
         $stars .= '☆';
     }
 
     return $stars;
 }
-?>
+
+
+function getCurrentPage() {
+    $urlPath = $_SERVER['REQUEST_URI'];
+    $urlPath = strtok($urlPath, '?');
+    $urlPath = rtrim($urlPath, '/');
+    $lastPart = basename($urlPath);
+    if (empty($lastPart)) {
+        return 'home';
+    }
+    return $lastPart;
+}
+
+function getBaseUrl() {
+    // Get protocol (HTTP or HTTPS)
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https://' : 'http://';
+    // Get host (e.g., localhost or domain)
+    $host = $_SERVER['HTTP_HOST'];
+    // Get the path to the project (e.g., /Youdemy/)
+    $path = str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+    return $protocol . $host . $path; // Full base URL
+}
+
+define('BASE_URL', getBaseUrl());

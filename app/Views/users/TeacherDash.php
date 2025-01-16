@@ -5,20 +5,19 @@ require_once realpath(__DIR__ . '/../layout/header.php');
 ?>
 
 <body class="bg-background font-sans">
-    <!-- Navbar -->
-    <nav class="bg-card shadow-sm w-full">
-        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="text-2xl font-bold text-primary">Youdemy</div>
-            <div class="hidden md:flex space-x-6">
-                <a href="#" class="text-foreground hover:text-primary">Dashboard</a>
-                <a href="#" class="text-foreground hover:text-primary">My Courses</a>
-                <a href="#" class="text-foreground hover:text-primary">Statistics</a>
-            </div>
-            <div class="flex items-center space-x-4">
-                <button class="px-4 py-2 text-primary-foreground bg-primary rounded hover:bg-opacity-90">Logout</button>
-            </div>
+<!-- Navbar -->
+<nav class="bg-card shadow-sm w-full">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="text-2xl font-bold text-primary">Youdemy</div>
+        <div class="hidden md:flex space-x-6">
+            <a href="../../Public" class="text-foreground hover:text-primary">Home</a>
+            <a href="../coursesPage" class="text-foreground hover:text-primary">Courses</a>
         </div>
-    </nav>
+        <div class="flex items-center space-x-4">
+                <a href="" class="px-4 py-2 text-primary-foreground bg-primary rounded hover:bg-opacity-90">Logout</a>
+        </div>
+    </div>
+</nav>
 
     <!-- Main Content -->
     <main class="p-8">
@@ -32,6 +31,10 @@ require_once realpath(__DIR__ . '/../layout/header.php');
                 <div class="bg-card p-6 rounded-sm shadow-sm border border-border">
                     <h3 class="text-accent-foreground mb-2">Total Students</h3>
                     <p class="text-3xl font-bold text-chart-3">320</p>
+                </div>
+                <div class="bg-card p-6 rounded-sm shadow-sm border border-border">
+                    <h3 class="text-accent-foreground mb-2">Appending Courses</h3>
+                    <p class="text-3xl font-bold text-chart-4">30</p>
                 </div>
                 <div class="bg-card p-6 rounded-sm shadow-sm border border-border">
                     <h3 class="text-accent-foreground mb-2">Revenue This Month</h3>

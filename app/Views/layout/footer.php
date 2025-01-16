@@ -28,7 +28,7 @@
                 </div>
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
-                    <div class="flex space-x-4">
+                    <div class="flex gap-2 flex-col">
                         <a href="#" class="text-accent hover:text-primary">Facebook</a>
                         <a href="#" class="text-accent hover:text-primary">Twitter</a>
                         <a href="#" class="text-accent hover:text-primary">LinkedIn</a>
