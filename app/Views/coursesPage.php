@@ -5,7 +5,7 @@ require_once realpath(__DIR__ . '/layout/header.php');
 
 <body class="bg-background font-sans">
     <!-- Navbar -->
-<nav class="bg-card shadow-sm fixed w-full z-50">
+<nav class="bg-card shadow-sm w-full z-50">
     <div class="container mx-auto px-4 py-3 flex items-center justify-between">
         <div class="text-2xl font-bold text-primary">Youdemy</div>
         <div class="hidden md:flex space-x-6">
@@ -44,36 +44,7 @@ require_once realpath(__DIR__ . '/layout/header.php');
     <section class="py-12 container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Course Card -->
-            <div class="bg-card rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085" alt="Course Thumbnail" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="text-xl font-semibold">Complete Web Development</h3>
-                    <p class="text-accent mt-2">Instructor: John Doe</p>
-                    <p class="text-accent mt-2">Category: Programming</p>
-                    <button class="mt-4 px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-opacity-90">View Details</button>
-                </div>
-            </div>
-
-            <!-- More course cards (repeat dynamically) -->
-            <div class="bg-card rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713" alt="Course Thumbnail" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="text-xl font-semibold">Data Science Masterclass</h3>
-                    <p class="text-accent mt-2">Instructor: Jane Smith</p>
-                    <p class="text-accent mt-2">Category: Data Science</p>
-                    <button class="mt-4 px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-opacity-90">View Details</button>
-                </div>
-            </div>
-
-            <div class="bg-card rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1551434678-e076c223a692" alt="Course Thumbnail" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="text-xl font-semibold">UX Design Fundamentals</h3>
-                    <p class="text-accent mt-2">Instructor: Alex Brown</p>
-                    <p class="text-accent mt-2">Category: Design</p>
-                    <button class="mt-4 px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-opacity-90">View Details</button>
-                </div>
-            </div>
+            
         </div>
     </section>
 
