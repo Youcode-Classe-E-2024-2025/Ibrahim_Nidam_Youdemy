@@ -59,13 +59,47 @@ function getCurrentPage() {
 }
 
 function getBaseUrl() {
-    // Get protocol (HTTP or HTTPS)
     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https://' : 'http://';
-    // Get host (e.g., localhost or domain)
     $host = $_SERVER['HTTP_HOST'];
-    // Get the path to the project (e.g., /Youdemy/)
     $path = str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
-    return $protocol . $host . $path; // Full base URL
+    return $protocol . $host . $path;
 }
 
 define('BASE_URL', getBaseUrl());
+
+
+function renderPagination($currentPage, $totalPages, $baseUrl = '?page=') {
+    $pagination = '<nav class="inline-flex items-center space-x-2">';
+
+    if ($currentPage > 1) {
+        $pagination .= '<a href="' . $baseUrl . ($currentPage - 1) . '" class="px-4 py-2 bg-card border text-accent rounded hover:bg-muted">Previous</a>';
+    }
+
+    if ($currentPage > 4) {
+        $pagination .= '<a href="' . $baseUrl . '1" class="px-4 py-2 bg-card border text-accent rounded hover:bg-muted">1</a>';
+        $pagination .= '<span class="px-2">...</span>';
+    }
+
+    for ($i = max(1, $currentPage - 3); $i < $currentPage; $i++) {
+        $pagination .= '<a href="' . $baseUrl . $i . '" class="px-4 py-2 bg-card border text-accent rounded hover:bg-muted">' . $i . '</a>';
+    }
+
+    $pagination .= '<span class="px-4 py-2 bg-primary text-white rounded">' . $currentPage . '</span>';
+
+    for ($i = $currentPage + 1; $i <= min($totalPages, $currentPage + 3); $i++) {
+        $pagination .= '<a href="' . $baseUrl . $i . '" class="px-4 py-2 bg-card border text-accent rounded hover:bg-muted">' . $i . '</a>';
+    }
+
+    if ($currentPage < $totalPages - 3) {
+        $pagination .= '<span class="px-2">...</span>';
+        $pagination .= '<a href="' . $baseUrl . $totalPages . '" class="px-4 py-2 bg-card border text-accent rounded hover:bg-muted">' . $totalPages . '</a>';
+    }
+
+    if ($currentPage < $totalPages) {
+        $pagination .= '<a href="' . $baseUrl . ($currentPage + 1) . '" class="px-4 py-2 bg-card border text-accent rounded hover:bg-muted">Next</a>';
+    }
+
+    $pagination .= '</nav>';
+
+    return $pagination;
+}

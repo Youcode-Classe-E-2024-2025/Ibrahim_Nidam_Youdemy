@@ -2,13 +2,16 @@
 
 namespace Core;
 
+use Model\CourseModel;
 use Security\Security;
 
 class Controller {
     protected $security;
+    protected $courseModel;
 
     public function __construct(){
         $this->security = new Security();
+        $this->courseModel = new CourseModel();
     }
 
     protected function showView($view, $data = []){

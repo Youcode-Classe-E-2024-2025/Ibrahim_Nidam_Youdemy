@@ -40,24 +40,25 @@ require_once realpath(__DIR__ . '/layout/header.php');
         </form>
     </div>
 
-    <!-- Courses Grid -->
-    <section class="py-12 container mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Course Card -->
-            
-        </div>
-    </section>
-
-    <!-- Pagination -->
-    <div class="container mx-auto px-4 flex justify-center my-12">
-        <nav class="inline-flex items-center space-x-2">
-            <button class="px-4 py-2 bg-card border border-border text-accent rounded hover:bg-muted">Previous</button>
-            <button class="px-4 py-2 bg-primary text-white rounded">1</button>
-            <button class="px-4 py-2 bg-card border border-border text-accent rounded hover:bg-muted">2</button>
-            <button class="px-4 py-2 bg-card border border-border text-accent rounded hover:bg-muted">3</button>
-            <button class="px-4 py-2 bg-card border border-border text-accent rounded hover:bg-muted">Next</button>
-        </nav>
+<!-- Courses Grid -->
+<?php require_once realpath(__DIR__ . '/layout/cards.php');?>
+<section class="py-12 container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <?php if (!empty($courses)): ?>
+            <?php foreach ($courses as $course): ?>
+                <?= renderCard($course); ?>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p class="text-center col-span-full text-accent">No courses found.</p>
+        <?php endif; ?>
     </div>
+</section>
+
+<!-- Pagination -->
+<div class="container mx-auto px-4 flex justify-center my-12">
+    <?= renderPagination($currentPage, $totalPages); ?>
+</div>
+
 
     <?php require_once "layout/footer.php" ?>
 
