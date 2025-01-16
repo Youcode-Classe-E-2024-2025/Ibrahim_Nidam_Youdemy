@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="text-center">
-  <a class="text-2xl underline relative top-12" href="/">Go Home</a>
+  <a href="../Public" class="text-2xl underline relative top-12" href="/">Go Home</a>
 <div class='hover'>
   <div class='background'>
     <div class='door'>403</div>

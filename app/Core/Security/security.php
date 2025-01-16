@@ -7,6 +7,12 @@
         private $passwordPattern = "/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/";
         private $csrfTokenKey = "csrf_token";
 
+        public function __construct() {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+        }
+
         public function validePassword($password){
             if(preg_match($this->passwordPattern, $password)){
                 return true;
@@ -22,7 +28,6 @@
         }
 
         public function verifyCsrfToken($token){
-            session_start();
             $tokenLifeTime = 300;
 
             if(isset($_SESSION[$this->csrfTokenKey], $_SESSION["csrf_token_time"]) 
@@ -40,6 +45,6 @@
         }
 
         public function sanitizeInput($input){
-            return htmlspecialchars($input, ENT_QUOTES, "UTF-8");
+            return htmlspecialchars(strip_tags($input), ENT_QUOTES, "UTF-8");
         }
     }

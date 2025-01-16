@@ -1,41 +1,58 @@
 <?php
 
-    namespace Core;
+namespace Core;
 
-    class Controller {
+use Security\Security;
 
-        protected function showView($view, $data = []){
-            extract($data);
+class Controller {
+    protected $security;
 
-            $viewPath = __DIR__ . "/../../app/Views/{$view}.php";
+    public function __construct(){
+        $this->security = new Security();
+    }
 
-            // var_dump("Attempting to load view from: " . $viewPath);
-            // var_dump("View exists: " . (file_exists($viewPath) ? 'Yes' : 'No'));
-            
-            if(file_exists($viewPath)){
-                require_once $viewPath;
-            } else {
-                die("View '{$view}' not found");
-            }
-        }
+    protected function showView($view, $data = []){
+        extract($data);
 
-        protected function redirect ($url){
-            header("Location: {$url}");
-            exit();
-        }
-
-        protected function setFlash($key, $message){
+        if (session_status() === PHP_SESSION_NONE) {
             session_start();
-            $_SESSION["flash"][$key] = $message;
         }
 
-        protected function getFlash($key){
-            session_start();
-            if(isset($_SESSION["flash"][$key])){
-                $message = $_SESSION["flash"][$key];
-                unset($_SESSION["flash"][$key]);
-                return $message;
-            }
-            return null;
+        $flashMessages = [];
+        if (isset($_SESSION['flash'])) {
+            $flashMessages = $_SESSION['flash'];
+            unset($_SESSION['flash']);
+        }
+
+        $viewPath = __DIR__ . "/../../app/Views/{$view}.php";
+        if (file_exists($viewPath)) {
+            require_once $viewPath;
+        } else {
+            die("View '{$view}' not found");
         }
     }
+
+    protected function redirect($url){
+        header("Location: {$url}");
+        exit();
+    }
+
+    protected function setFlash($key, $message){
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $_SESSION['flash'][$key] = $message;
+    }
+
+    protected function getFlash($key){
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (isset($_SESSION['flash'][$key])) {
+            $message = $_SESSION['flash'][$key];
+            unset($_SESSION['flash'][$key]);
+            return $message;
+        }
+        return null;
+    }
+}

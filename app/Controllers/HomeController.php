@@ -7,6 +7,7 @@
     class HomeController extends Controller {
 
         public function index(){
-            $this->showView("home");
+            $csrfToken = $this->security->generateCsrfToken();
+            $this->showView("home",["csrf_token" => $csrfToken]);
         }
     }

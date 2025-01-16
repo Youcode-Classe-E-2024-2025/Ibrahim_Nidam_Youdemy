@@ -1,5 +1,6 @@
 <?php
-namespace Users;
+namespace UsersController;
+
 
 class StudentController extends UserController {
 

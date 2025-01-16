@@ -2,13 +2,19 @@
 
     namespace Middleware;
 
+    use Core\Controller;
+    use Core\Router;
     use Security\Security;
 
     class CsrfMiddleware {
         private $security;
+        private $router;
+        private $controller;
 
         public function __construct(){
             $this->security = new Security();
+            $this->router = new Router();
+            $this->controller = new Controller();
         }
 
         public function handle($request){
@@ -18,7 +24,8 @@
 
                 if(!$csrfToken || !$this->security->verifyCsrfToken($csrfToken)){
                     http_response_code(403);
-                    die("Forbidden: Invalid CSRF Token.");
+                    $this->router->handleError(403);
+                    $this->controller->setFlash("error","Forbidden: Invalid CSRF Token.");
                 }
             }
             return true;

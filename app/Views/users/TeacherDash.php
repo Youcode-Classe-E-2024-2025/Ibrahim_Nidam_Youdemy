@@ -14,7 +14,7 @@ require_once realpath(__DIR__ . '/../layout/header.php');
             <a href="../coursesPage" class="text-foreground hover:text-primary">Courses</a>
         </div>
         <div class="flex items-center space-x-4">
-                <a href="" class="px-4 py-2 text-primary-foreground bg-primary rounded hover:bg-opacity-90">Logout</a>
+                <a href="../logout" class="px-4 py-2 text-primary-foreground bg-primary rounded hover:bg-opacity-90">Logout</a>
         </div>
     </div>
 </nav>

@@ -10,14 +10,25 @@
         }
 
         public function run() {
-            $uri = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-        
-            $basePath = "/%5b11%5d%20Plateforme%20de%20Cours%20en%20Ligne%20Youdemy/Public";
+            // Get the request URI and decode it
+            $uri = rawurldecode(parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH));
+    
+            // Dynamically determine the base path
+            $scriptName = dirname($_SERVER["SCRIPT_NAME"]);
+            $basePath = rtrim($scriptName, '/');
+    
+            // Remove the base path from the URI
             if (strpos($uri, $basePath) === 0) {
                 $uri = substr($uri, strlen($basePath));
             }
-        
+    
+            // Ensure the URI starts with a slash
+            $uri = '/' . ltrim($uri, '/');
+    
+            // Get the request method
             $method = $_SERVER["REQUEST_METHOD"];
+    
+            // Route the request
             self::$router->route($uri, $method);
         }
     }

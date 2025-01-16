@@ -4,11 +4,14 @@
 
 use PDO;
 use PDOException;
+use Security\Security;
 
     class Model {
         protected $db;
+        protected $security;
 
         public function __construct() {
+            $this->security = new Security();
             $config = require __DIR__ . "/../../Config/database.php";
 
             try {

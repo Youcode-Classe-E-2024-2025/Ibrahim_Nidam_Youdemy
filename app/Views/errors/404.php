@@ -59,7 +59,7 @@
             <div class="text">
                 <article>
                     <p>Uh oh! Looks like you got lost. <br>Go back to the homepage!</p>
-                    <a href="#" class="px-4 py-2 bg-white rounded-full">Home!</a>
+                    <a href="../Public" class="px-4 py-2 bg-white rounded-full">Home!</a>
                 </article>
             </div>
 

@@ -1,7 +1,6 @@
 <?php
 
-namespace Users;
-
+namespace UsersController;
 
 class AdminController extends UserController {
 

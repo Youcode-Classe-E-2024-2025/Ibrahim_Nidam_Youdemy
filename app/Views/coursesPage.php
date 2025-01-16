@@ -12,15 +12,15 @@ require_once realpath(__DIR__ . '/layout/header.php');
             <input type="hidden" name="">
             <a href="../Public" class="text-foreground hover:text-primary">Home</a>
             <a href="404" class="text-foreground hover:text-primary">Categories</a>
-            <?php if(isset($_SESSION["user_id"])): ?>
-                <a href="users/<?= $_SESSION["user_role"] == "admin" ? "AdminDash" : ($_SESSION["user_role"] == "teacher" ? "TeacherDash" : "StudentProfile") ?>" class="text-foreground hover:text-primary">Dashboard</a>
+            <?php if(isset($_SESSION["id"])): ?>
+                <a href="users/<?= $_SESSION["role"] == "admin" ? "AdminDash" : ($_SESSION["role"] == "teacher" ? "TeacherDash" : "StudentProfile") ?>" class="text-foreground hover:text-primary">Dashboard</a>
             <?php endif; ?>
         </div>
-        <?php if(!isset($_SESSION["user_id"])): ?>
+        <?php if(!isset($_SESSION["id"])): ?>
         <?php require_once "layout/login_signup_forms.php" ?>
         <?php else:?>
             <div class="flex items-center space-x-4">
-                <a href="" class="px-4 py-2 text-primary-foreground bg-primary rounded hover:bg-opacity-90">Logout</a>
+                <a href="logout" class="px-4 py-2 text-primary-foreground bg-primary rounded hover:bg-opacity-90">Logout</a>
             </div>
         <?php endif; ?>
     </div>
