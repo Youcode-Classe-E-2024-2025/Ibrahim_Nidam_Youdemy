@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS courses (
     content_type ENUM('video', 'document') NOT NULL,
     content_path VARCHAR(255) NOT NULL,
     category_id INT NOT NULL,
+    rating TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Rating from 0 to 5',
     FOREIGN KEY (teacher_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
 );
@@ -52,7 +53,7 @@ CREATE TABLE IF NOT EXISTS course_tags (
 );
 
 -- Insert Users (Admin, Teachers, Students, Visitors)
-INSERT INTO users (name, email, password, role, is_active) VALUES
+INSERT IGNORE INTO users (name, email, password, role, is_active) VALUES
 ('Admin User', 'a@y.com', '$2a$12$5snq9l/oHpX1ECB62HJSaOZWCRm3rOWTxaifdbW.C9jxLM11MbiEO', 'admin', TRUE),
 ('John Teacher', 't1@y.com', '$2a$12$5snq9l/oHpX1ECB62HJSaOZWCRm3rOWTxaifdbW.C9jxLM11MbiEO', 'teacher', TRUE),
 ('Jane Teacher', 't2@y.com', '$2a$12$5snq9l/oHpX1ECB62HJSaOZWCRm3rOWTxaifdbW.C9jxLM11MbiEO', 'teacher', TRUE),
@@ -61,7 +62,7 @@ INSERT INTO users (name, email, password, role, is_active) VALUES
 ('Charlie Student', 's3@y.com', '$2a$12$5snq9l/oHpX1ECB62HJSaOZWCRm3rOWTxaifdbW.C9jxLM11MbiEO', 'student', TRUE);
 
 -- Insert Categories
-INSERT INTO categories (name) VALUES
+INSERT IGNORE INTO categories (name) VALUES
 ('Programming'),
 ('Design'),
 ('Data Science'),
@@ -69,7 +70,7 @@ INSERT INTO categories (name) VALUES
 ('Marketing');
 
 -- Insert Tags
-INSERT INTO tags (name) VALUES
+INSERT IGNORE INTO tags (name) VALUES
 ('Python'),
 ('JavaScript'),
 ('Web Development'),
@@ -80,7 +81,7 @@ INSERT INTO tags (name) VALUES
 ('SEO');
 
 -- Insert Courses (created by teachers)
-INSERT INTO courses (teacher_id, title, description, content_type, content_path, category_id) VALUES
+INSERT IGNORE INTO courses (teacher_id, title, description, content_type, content_path, category_id) VALUES
 (2, 'Python for Beginners', 'Learn the basics of Python programming', 'video', 'path/to/python-course.mp4', 1),
 (2, 'Web Development 101', 'Introduction to HTML, CSS, and JavaScript', 'document', 'path/to/web-dev-guide.pdf', 1),
 (3, 'Graphic Design Masterclass', 'Become a pro at graphic design using Adobe tools', 'video', 'path/to/design-course.mp4', 2),
@@ -88,7 +89,7 @@ INSERT INTO courses (teacher_id, title, description, content_type, content_path,
 (2, 'Machine Learning Essentials', 'Introduction to machine learning concepts and techniques', 'video', 'path/to/ml-course.mp4', 3);
 
 -- Insert Course Tags (many-to-many)
-INSERT INTO course_tags (course_id, tag_id) VALUES
+INSERT IGNORE INTO course_tags (course_id, tag_id) VALUES
 (1, 1),  -- Python for Beginners -> Python
 (1, 3),  -- Python for Beginners -> Web Development
 (2, 2),  -- Web Development 101 -> JavaScript
@@ -99,7 +100,7 @@ INSERT INTO course_tags (course_id, tag_id) VALUES
 (5, 5);  -- Machine Learning Essentials -> Machine Learning
 
 -- Insert Enrollments (students enrolling in courses)
-INSERT INTO enrollments (course_id, student_id) VALUES
+INSERT IGNORE INTO enrollments (course_id, student_id) VALUES
 (1, 4),  -- Alice Student enrolls in Python for Beginners
 (1, 5),  -- Bob Student enrolls in Python for Beginners
 (2, 4),  -- Alice Student enrolls in Web Development 101

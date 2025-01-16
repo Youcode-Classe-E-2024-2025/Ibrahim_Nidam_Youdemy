@@ -27,6 +27,9 @@ use Security\Security;
                     $this->db->exec("CREATE DATABASE `{$config['database']}` CHARACTER SET {$config['charset']}");
                     $this->db->exec("USE `{$config['database']}`").
                     $this->initializeDatabase($config["script_path"]);
+
+                    $seeder = new DatabaseSeeder();
+                    $seeder->run();
                 } else {
                     $this->db->exec("USE `{$config['database']}`");
                 }
