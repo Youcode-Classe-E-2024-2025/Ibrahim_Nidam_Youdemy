@@ -4,7 +4,7 @@ function renderCard($data) {
 
     $tags = isset($data['tags']) ? explode(', ', $data['tags']) : [];
     ?>
-    <div class="bg-card rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition flex flex-col h-full">
+    <div class="bg-card rounded-lg shadow-sm cursor-pointer overflow-hidden hover:shadow-lg transition flex flex-col h-full">
         <img src="https://picsum.photos/400/300?random=<?php echo rand(1, 1000); ?>" alt="<?php echo $data['title']; ?>" class="w-full h-48 object-cover">
         <div class="p-4 flex flex-col flex-grow">
             <?php if (!empty($tags)): ?>

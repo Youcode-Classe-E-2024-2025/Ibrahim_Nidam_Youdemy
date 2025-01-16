@@ -39,5 +39,18 @@ class CourseModel extends Model {
         $sql = "SELECT COUNT(*) AS total FROM courses";
         $stmt = $this->db->query($sql);
         return (int) $stmt->fetch(PDO::FETCH_ASSOC)['total'];
-    }    
+    }
+
+    public function getRandomCourses($limit = 3) {
+        $sql = "SELECT c.*, 
+                    GROUP_CONCAT(t.name ORDER BY t.name SEPARATOR ', ') AS tags
+                FROM courses c
+                LEFT JOIN course_tags ct ON c.id = ct.course_id
+                LEFT JOIN tags t ON ct.tag_id = t.id
+                GROUP BY c.id
+                ORDER BY RAND()
+                LIMIT $limit";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

@@ -8,6 +8,10 @@
 
         public function index(){
             $csrfToken = $this->security->generateCsrfToken();
-            $this->showView("home",["csrf_token" => $csrfToken]);
+            $randomCourses = $this->courseModel->getRandomCourses();
+            $this->showView("home",[
+                "csrf_token" => $csrfToken,
+                "randomCourses" => $randomCourses
+            ]);
         }
     }
