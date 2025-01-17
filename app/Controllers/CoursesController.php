@@ -22,4 +22,28 @@ class CoursesController extends Controller {
             "totalPages" => $totalPages
         ]);
     }
+
+    public function search() {
+        $keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : '';
+    
+        if (empty($keyword)) {
+            $this->showView("coursesPage", [
+                "courses" => [],
+                "keyword" => $keyword,
+                "currentPage" => 1,
+                "totalPages" => 1
+            ]);
+            return;
+        }
+    
+        $courses = $this->courseModel->searchCourses($keyword);
+    
+        $this->showView("coursesPage", [
+            "courses" => $courses,
+            "keyword" => $keyword,
+            "currentPage" => 1,
+            "totalPages" => 1
+        ]);
+    }
+    
 }

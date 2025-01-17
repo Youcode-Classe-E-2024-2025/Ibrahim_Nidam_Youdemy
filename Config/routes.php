@@ -23,3 +23,4 @@
     App::$router->post("/register-student", [UserController::class, "registerStudent"]);
     App::$router->post("/register-teacher", [UserController::class, "registerTeacher"]);
 
+    App::$router->get("/search", [CoursesController::class, "search"]);

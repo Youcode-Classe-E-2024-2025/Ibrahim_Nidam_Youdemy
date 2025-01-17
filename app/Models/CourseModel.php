@@ -53,4 +53,11 @@ class CourseModel extends Model {
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function searchCourses($keyword) {
+        $sql = "SELECT * FROM courses WHERE title LIKE :keyword OR description LIKE :keyword";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':keyword' => '%' . $keyword . '%']);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }    
 }
