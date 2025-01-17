@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use AdminModel\CategoryModel;
+use AdminModel\TagsModel;
 use CourseModel\CourseModel;
 use Model\StatisticsModel;
 use Security\Security;
@@ -10,11 +12,15 @@ class Controller {
     protected $security;
     protected $courseModel;
     protected $statsModel;
+    protected $categoryModel;
+    protected $tagsModel;
 
     public function __construct(){
         $this->security = new Security();
         $this->courseModel = new CourseModel();
         $this->statsModel = new StatisticsModel();
+        $this->categoryModel = new CategoryModel();
+        $this->tagsModel = new TagsModel();
     }
 
     protected function showView($view, $data = []){
