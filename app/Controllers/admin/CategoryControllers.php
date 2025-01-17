@@ -51,7 +51,7 @@ class CategoryController extends Controller {
                 $this->setFlash("error", "Failed to delete category.");
             }
 
-            $this->redirect("/admin/categories");
+            $this->redirect("users/AdminDash");
         }
     }
 }
