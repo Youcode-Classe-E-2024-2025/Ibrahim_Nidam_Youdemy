@@ -24,6 +24,7 @@ use Core\App;
 
     App::$router->get("/users/AdminDash", [statisticsController::class, "adminStats"]);
     App::$router->get("/users/TeacherDash", [statisticsController::class, "teacherStats"]);
+
     App::$router->post("/login", [UserController::class, "login"]);
     App::$router->post("/register-student", [UserController::class, "registerStudent"]);
     App::$router->post("/register-teacher", [UserController::class, "registerTeacher"]);

@@ -9,8 +9,10 @@
             "Model\\": "app/Models/",
             "UsersModel\\": "app/Models/users/",
             "CourseModel\\": "app/Models/courses/",
+            "AdminModel\\": "app/Models/admin/",
             "Controller\\": "app/Controllers/",
             "UsersController\\": "app/Controllers/users/",
+            "AdminController\\": "app/Controllers/admin/",
             "CourseController\\": "app/Controllers/courses/"
         },
         "files": [
