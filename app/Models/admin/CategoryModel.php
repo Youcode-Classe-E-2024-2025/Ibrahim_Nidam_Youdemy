@@ -11,10 +11,22 @@ class CategoryModel extends Model {
     }
 
     public function addCats($name){
+        $existingCats = $this->read("categories", ["name" => $name]);
+
+        if(!empty($existingCats)){
+            return false;
+        }
+
         return $this->create("categories", ["name" => $name]);
     }
 
     public function updateCats($id, $name){
+        $existingCats = $this->read("categories", ["name" => $name]);
+
+        if(!empty($existingCats)){
+            return false;
+        }
+        
         return $this->update("categories", ["name" => $name], ["id" => $id]);
     }
 
