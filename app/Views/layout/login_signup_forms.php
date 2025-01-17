@@ -32,7 +32,7 @@ label.filled {
 </div>
 
 <!-- Sign In Modal -->
-<div id="signinModal" class="fixed top-0 left-0 w-screen h-screen overflow-hidden bg-gradient-to-tl from-rose-800 via-rose-400 to-white hidden items-center justify-center">
+<div id="signinModal" class="fixed top-0 left-0 w-screen h-screen overflow-hidden bg-gradient-to-tl from-rose-800 via-rose-400 to-white hidden items-center justify-center z-50">
     <div class="relative w-full max-w-md">
         <button onclick="closeForm()" class="absolute top-5 right-5 text-white cursor-pointer">✕</button>
         <h2 class="text-3xl font-bold text-white mb-4">Sign In</h2>
@@ -52,7 +52,7 @@ label.filled {
 </div>
 
 <!-- Learn Modal -->
-<div id="learnModal" class="fixed top-0 left-0 w-screen h-screen overflow-hidden bg-gradient-to-tl from-rose-800 via-rose-400 to-white hidden items-center justify-center">
+<div id="learnModal" class="fixed top-0 left-0 w-screen h-screen overflow-hidden bg-gradient-to-tl from-rose-800 via-rose-400 to-white hidden items-center justify-center z-50">
     <div class="relative w-full max-w-md">
         <button onclick="closeForm()" class="absolute top-5 right-5 text-white cursor-pointer">✕</button>
         <h2 class="text-3xl font-bold text-white mb-4">Sign Up to Learn</h2>
@@ -80,7 +80,7 @@ label.filled {
 </div>
 
 <!-- Teach Modal -->
-<div id="teachModal" class="fixed top-0 left-0 w-screen h-screen overflow-hidden bg-gradient-to-tl from-rose-800 via-rose-400 to-white hidden items-center justify-center">
+<div id="teachModal" class="fixed top-0 left-0 w-screen h-screen overflow-hidden bg-gradient-to-tl from-rose-800 via-rose-400 to-white hidden items-center justify-center z-50">
     <div class="relative w-full max-w-md">
         <button onclick="closeForm()" class="absolute top-5 right-5 text-white cursor-pointer">✕</button>
         <h2 class="text-3xl font-bold text-white mb-4">Sign Up to Teach</h2>

@@ -25,9 +25,11 @@ CREATE TABLE IF NOT EXISTS courses (
     content_path VARCHAR(255) NOT NULL,
     category_id INT NOT NULL,
     rating TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Rating from 0 to 5',
+    approval ENUM('pending', 'approved', 'rejected') NOT NULL DEFAULT 'pending',
     FOREIGN KEY (teacher_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
 );
+
 
 CREATE TABLE IF NOT EXISTS enrollments (
     id INT AUTO_INCREMENT PRIMARY KEY,

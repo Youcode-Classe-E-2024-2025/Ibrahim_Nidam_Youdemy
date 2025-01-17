@@ -11,7 +11,7 @@ require_once realpath(__DIR__ . '/layout/header.php');
         <div class="hidden md:flex space-x-6">
             <input type="hidden" name="">
             <a href="../Public" class="text-foreground hover:text-primary">Home</a>
-            <?php if (isset($keyword) && !empty($keyword)): ?>
+            <?php if (isset($oParam) && $oParam === 'false'): ?>
                 <a href="coursesPage" class="text-foreground hover:text-primary">Courses</a>
             <?php endif; ?>
             <a href="404" class="text-foreground hover:text-primary">Categories</a>
@@ -42,6 +42,7 @@ require_once realpath(__DIR__ . '/layout/header.php');
 <!-- Search Bar -->
 <div class="container mx-auto mt-8 px-4">
     <form action="search" method="GET" class="relative w-full md:max-w-2xl mx-auto">
+        <input type="hidden" name="o" value="<?php echo empty($courses) ? 'true' : 'false'; ?>">
         <input 
             type="text" 
             name="keyword" 

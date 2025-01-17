@@ -18,35 +18,34 @@ require_once realpath(__DIR__ . '/../layout/header.php');
         </div>
     </div>
 </nav>
-
     <!-- Main Content -->
     <main class="p-8">
-        <div class="mb-8">
-            <h1 class="text-heading font-bold text-foreground mb-6">Teacher Dashboard</h1>
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <div class="bg-card p-6 rounded-sm shadow-sm border border-border">
-                    <h3 class="text-accent-foreground mb-2">Total Courses</h3>
-                    <p class="text-3xl font-bold text-chart-1">12</p>
-                </div>
-                <div class="bg-card p-6 rounded-sm shadow-sm border border-border">
-                    <h3 class="text-accent-foreground mb-2">Total Students</h3>
-                    <p class="text-3xl font-bold text-chart-3">320</p>
-                </div>
-                <div class="bg-card p-6 rounded-sm shadow-sm border border-border">
-                    <h3 class="text-accent-foreground mb-2">Appending Courses</h3>
-                    <p class="text-3xl font-bold text-chart-4">30</p>
-                </div>
-                <div class="bg-card p-6 rounded-sm shadow-sm border border-border">
-                    <h3 class="text-accent-foreground mb-2">Revenue This Month</h3>
-                    <p class="text-3xl font-bold text-chart-5">$1,245</p>
-                </div>
-            </div>
+    <div class="mb-8">
+    <h1 class="text-heading font-bold text-foreground mb-6">Teacher Dashboard</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- Total Courses Card -->
+        <div class="bg-card p-6 rounded-sm shadow-sm border border-border">
+            <h3 class="text-accent-foreground mb-2">Total Courses</h3>
+            <p class="text-3xl font-bold text-chart-1"><?php echo $total_courses; ?></p>
         </div>
+        <!-- Total Students Card -->
+        <div class="bg-card p-6 rounded-sm shadow-sm border border-border">
+            <h3 class="text-accent-foreground mb-2">Total Students</h3>
+            <p class="text-3xl font-bold text-chart-3"><?php echo $total_students; ?></p>
+        </div>
+        <!-- Pending Courses Card -->
+        <div class="bg-card p-6 rounded-sm shadow-sm border border-border">
+            <h3 class="text-accent-foreground mb-2">Pending Courses</h3>
+            <p class="text-3xl font-bold text-chart-4"><?php echo $pending_courses; ?></p>
+        </div>
+    </div>
+</div>
 
         <!-- Course Management Form -->
         <div class="bg-card p-6 rounded-sm shadow-sm mb-8">
             <h2 class="text-heading font-heading mb-6">Add New Course</h2>
             <form class="bg-muted p-6 rounded shadow-sm" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
                 <div class="mb-4">
                     <label class="block text-sm font-medium mb-1">Title</label>
                     <input type="text" name="title" class="w-full px-4 py-2 border border-border rounded-sm" placeholder="Course Title" required>

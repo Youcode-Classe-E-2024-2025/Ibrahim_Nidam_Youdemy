@@ -21,31 +21,51 @@ require_once realpath(__DIR__ . '/../layout/header.php');
 <!-- Main Content -->
 <main class="flex-1 overflow-auto p-8">
 <div class="mb-8">
-    <h2 class="text-heading font-heading text-foreground mb-4">Quick Insights</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <!-- Total Users Card -->
-        <div class="bg-card p-6 rounded-sm shadow-sm border border-border">
-            <h3 class="text-accent-foreground mb-2">Total Users</h3>
-            <p class="text-3xl font-bold text-primary">15,687</p>
-            <p class="text-muted-foreground mt-2">+12% from last month</p>
-        </div>
+    <h2 class="text-heading font-heading text-foreground mb-4">Admin Dashboard</h2>
+
+    <!-- Total Courses and Course with Most Students in the same line -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <!-- Total Courses Card -->
         <div class="bg-card p-6 rounded-sm shadow-sm border border-border">
-            <h3 class="text-accent-foreground mb-2">Total Courses</h3>
-            <p class="text-3xl font-bold text-chart-2">456</p>
-            <p class="text-muted-foreground mt-2">+8% from last month</p>
+            <h3 class="text-2xl underline font-bold mb-2">Total Courses</h3>
+            <p class="text-3xl font-bold text-primary"><?php echo $total_courses; ?></p>
         </div>
-        <!-- Pending Requests Card -->
+
+        <!-- Course with Most Students Card -->
         <div class="bg-card p-6 rounded-sm shadow-sm border border-border">
-            <h3 class="text-accent-foreground mb-2">Pending Requests</h3>
-            <p class="text-3xl font-bold text-chart-4">23</p>
-            <p class="text-muted-foreground mt-2">5 new this week</p>
+            <h3 class="text-2xl underline font-bold mb-2">Course with Most Students</h3>
+            <?php if (!empty($course_with_most_students)): ?>
+                <h4 class="text-accent-foreground mb-2"><?php echo $course_with_most_students['title']; ?></h4>
+                <p class="text-3xl font-bold text-chart-4"><?php echo $course_with_most_students['student_count']; ?></p>
+            <?php else: ?>
+                <p class="text-muted-foreground">No courses found.</p>
+            <?php endif; ?>
         </div>
-        <!-- Pending Courses Card -->
-        <div class="bg-card p-6 rounded-sm shadow-sm border border-border">
-            <h3 class="text-accent-foreground mb-2">Pending Courses</h3>
-            <p class="text-3xl font-bold text-chart-5">5</p>
-            <p class="text-muted-foreground mt-2">4 new this week</p>
+    </div>
+
+    <!-- Courses by Category Section -->
+    <div class="mb-8">
+        <h3 class="text-heading font-heading text-foreground underline mb-4">Courses by Category</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <?php foreach ($courses_by_category as $category): ?>
+                <div class="bg-card p-6 rounded-sm shadow-sm border border-border">
+                    <h4 class="text-accent-foreground mb-2"><?php echo $category['category_name']; ?></h4>
+                    <p class="text-chart-5">Number of Courses: <?php echo $category['course_count']; ?></p>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <!-- Top 3 Teachers Section -->
+    <div class="mb-8">
+        <h3 class="text-heading font-heading text-foreground underline mb-4">Top 3 Teachers</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <?php foreach ($top_teachers as $teacher): ?>
+                <div class="bg-card p-6 rounded-sm shadow-sm border border-border">
+                    <h4 class="text-accent-foreground mb-2"><?php echo $teacher['name']; ?></h4>
+                    <p class="text-chart-3">Number of Courses: <?php echo $teacher['course_count']; ?></p>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>

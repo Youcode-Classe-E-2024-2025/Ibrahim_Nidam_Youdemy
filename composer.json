@@ -2,14 +2,16 @@
     "name": "ibrahim/youdemy",
     "autoload": {
         "psr-4": {
-            "Controller\\": "app/Controllers/",
-            "UsersController\\": "app/Controllers/users/",
-            "UsersModel\\": "app/Models/users/",
-            "Model\\": "app/Models/",
+            "Connection\\": "Config/",
             "Core\\": "app/Core/",
             "Security\\": "app/Core/Security/",
             "Middleware\\": "app/Middleware/",
-            "Connection\\": "Config/"
+            "Model\\": "app/Models/",
+            "UsersModel\\": "app/Models/users/",
+            "CourseModel\\": "app/Models/courses/",
+            "Controller\\": "app/Controllers/",
+            "UsersController\\": "app/Controllers/users/",
+            "CourseController\\": "app/Controllers/courses/"
         },
         "files": [
             "app/Core/helpers.php"

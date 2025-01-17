@@ -2,16 +2,19 @@
 
 namespace Core;
 
-use Model\CourseModel;
+use CourseModel\CourseModel;
+use Model\StatisticsModel;
 use Security\Security;
 
 class Controller {
     protected $security;
     protected $courseModel;
+    protected $statsModel;
 
     public function __construct(){
         $this->security = new Security();
         $this->courseModel = new CourseModel();
+        $this->statsModel = new StatisticsModel();
     }
 
     protected function showView($view, $data = []){

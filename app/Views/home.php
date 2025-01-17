@@ -15,7 +15,7 @@ require_once realpath(__DIR__ . '/layout/header.php');
                 <a href="404" class="text-foreground hover:text-primary">Categories</a>
                 <?php if(isset($_SESSION["id"])): ?>
                     <a href="users/<?= $_SESSION["role"] == "admin" ? "AdminDash" : ($_SESSION["role"] == "teacher" ? "TeacherDash" : "StudentProfile") ?>" class="text-foreground hover:text-primary">Dashboard</a>
-            <?php endif; ?>
+                <?php endif; ?>
         </div>
         <?php if(!isset($_SESSION["id"])): ?>
             <?php require_once "layout/login_signup_forms.php" ?>
