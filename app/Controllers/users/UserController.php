@@ -1,20 +1,29 @@
 <?php
     namespace UsersController;
 
-    use Core\Controller;
+use AdminModel\CategoryModel;
+use AdminModel\TagsModel;
+use Core\Controller;
     use Middleware\CsrfMiddleware;
-    use Security\Security;
+use Model\StatisticsModel;
+use Security\Security;
     use UsersModel\UserModel;
 
     class UserController extends Controller {
         private $userModel;
         private $csrfMiddleware;
-        protected  $security;
+        protected $security;
+        protected $stats;
+        protected $tags;
+        protected $categories;
 
         public function __construct(){
             $this->userModel = new UserModel();
             $this->csrfMiddleware = new CsrfMiddleware();
             $this->security = new Security();
+            $this->stats = new StatisticsModel();
+            $this->tags = new TagsModel();
+            $this->categories = new CategoryModel();
         }
 
         public function registerStudent(){

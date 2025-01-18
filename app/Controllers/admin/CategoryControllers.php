@@ -6,13 +6,14 @@ use Core\Controller;
 
 class CategoryController extends Controller {
 
-    public function index(){
-        $data = [
-            "categories" => $this->categoryModel->getAllCats(),
-            "csrf_token" => $this->security->generateCsrfToken()
-        ];
-
-        $this->showView("users/AdminDash", $data);
+    public function index() {
+        $categories = $this->categoryModel->getAllCats();
+        $csrf_token = $this->security->generateCsrfToken();
+    
+        $this->showView("users/AdminDash", [
+            "categories" => $categories,
+            "csrf_token" => $csrf_token,
+        ]);
     }
 
     public function add(){

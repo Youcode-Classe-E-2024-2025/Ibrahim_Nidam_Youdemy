@@ -61,8 +61,12 @@ function getCurrentPage() {
 function getBaseUrl() {
     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https://' : 'http://';
     $host = $_SERVER['HTTP_HOST'];
-    $path = str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
-    return $protocol . $host . $path;
+    $path = dirname($_SERVER['SCRIPT_NAME']);
+    return rtrim($protocol . $host . '/' . trim($path, '/'), '/') . '/';
+}
+
+function url($path = '') {
+    return getBaseUrl() . ltrim($path, '/');
 }
 
 define('BASE_URL', getBaseUrl());

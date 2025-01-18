@@ -25,6 +25,11 @@
 
                 if(is_array($controller)){
                     [$class, $method] = $controller;
+
+                    if (!class_exists($class)) {
+                        die("Class not found: $class");
+                    }
+
                     $controller = new $class();
                     return call_user_func([$controller, $method]);
                 }

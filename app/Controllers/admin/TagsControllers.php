@@ -6,14 +6,16 @@ use Core\Controller;
 
 class TagsController extends Controller {
 
-    public function index(){
-        $data = [
-            "tags" => $this->tagsModel->getAllTags(),
-            "csrf_token" => $this->security->generateCsrfToken()
-        ];
-
-        $this->showView("users/AdminDash", $data);
+    public function index() {
+        $tags = $this->tagsModel->getAllTags();
+        $csrf_token = $this->security->generateCsrfToken();
+    
+        $this->showView("users/AdminDash", [
+            "tags" => $tags,
+            "csrf_token" => $csrf_token,
+        ]);
     }
+    
 
     public function add(){
         if($_SERVER["REQUEST_METHOD"] === "POST"){
@@ -59,7 +61,7 @@ class TagsController extends Controller {
     }
 
     public function delete($id){
-        if($_SERVER["REQUEST_METHOD"] === "POST"){
+        if($_SERVER["REQUEST_METHOD"] === "GET"){
 
             if ($this->tagsModel->deleteTag($id)) {
                 $this->setFlash("success", "Tag deleted successfully!");

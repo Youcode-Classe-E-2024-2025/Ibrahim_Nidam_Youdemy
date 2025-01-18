@@ -72,7 +72,7 @@ require_once realpath(__DIR__ . '/../layout/header.php');
 
 <!-- Pending Teachers -->
 <div class="bg-card p-6 rounded-sm shadow-sm mb-8">
-    <h2 class="text-heading font-heading mb-6">Pending Teacher Applications</h2>
+    <h2 class="text-heading font-heading underline mb-6">Pending Teacher Applications</h2>
     <div class="overflow-x-auto">
         <table class="w-full table-fixed">
             <thead>
@@ -109,7 +109,7 @@ require_once realpath(__DIR__ . '/../layout/header.php');
 
 <!-- Pending Courses -->
 <div class="bg-card p-6 rounded-sm shadow-sm mb-8">
-    <h2 class="text-heading font-heading mb-6">Pending Courses Applications</h2>
+    <h2 class="text-heading font-heading underline mb-6">Pending Courses Applications</h2>
     <div class="overflow-x-auto">
         <table class="w-full table-fixed">
             <thead>
@@ -146,7 +146,7 @@ require_once realpath(__DIR__ . '/../layout/header.php');
 
 <!-- User Management -->
 <div class="bg-card p-6 rounded-sm shadow-sm mb-8">
-    <h2 class="text-heading font-heading mb-6">User Management</h2>
+    <h2 class="text-heading font-heading underline mb-6">User Management</h2>
     <div class="overflow-x-auto">
         <table class="w-full table-fixed">
             <thead>
@@ -180,7 +180,6 @@ require_once realpath(__DIR__ . '/../layout/header.php');
                             </div>
                         </td>
                     </tr>
-                    <!-- More rows for testing spread -->
                 </tbody>
             </table>
         </div>
@@ -188,10 +187,8 @@ require_once realpath(__DIR__ . '/../layout/header.php');
 </div>
 
 
-
-<!-- Tags & Cats Management Section -->
 <div class="bg-card p-6 rounded-sm shadow-sm mb-8">
-    <h2 class="text-heading font-heading mb-6">Tags & Category Management</h2>
+    <h2 class="text-heading font-heading underline mb-6">Tags & Category Management</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
         <!-- Categories Table -->
         <div class="w-full">
@@ -206,7 +203,8 @@ require_once realpath(__DIR__ . '/../layout/header.php');
                     <!-- Add New Category Form -->
                     <tr>
                         <td class="border border-gray-300 px-4 py-2">
-                            <form method="POST" action="/admin/categories/add" id="addCategoryForm">
+                            <form method="POST" action="<?php echo url('/users/AdminDash'); ?>" id="addCategoryForm">
+                                <input type="hidden" name="action" value="add_category">
                                 <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
                                 <input type="text" name="name" placeholder="New Category" class="w-full text-black px-2 py-1 border border-gray-300">
                             </form>
@@ -217,19 +215,30 @@ require_once realpath(__DIR__ . '/../layout/header.php');
                     </tr>
 
                     <!-- Display Existing Categories -->
-                    <?php foreach ($categories as $category): ?>
+                    <?php if (!empty($categories)): ?>
+                        <?php foreach ($categories as $category): ?>
+                            <tr>
+                                <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($category["name"]); ?></td>
+                                <td class="border text-center border-gray-300 px-4 py-2">
+                                    <div class="flex gap-3 justify-center text-sm">
+                                        <!-- Edit Category -->
+                                        <a href="<?php echo url('/users/AdminDash'); ?>?action=edit_category&id=<?php echo $category['id']; ?>" class="text-indigo-600 hover:text-indigo-400 transition-colors">Edit</a>
+                                        <!-- Delete Category -->
+                                        <form method="POST" action="<?php echo url('/users/AdminDash'); ?>" class="inline">
+                                            <input type="hidden" name="action" value="delete_category">
+                                            <input type="hidden" name="id" value="<?php echo $category['id']; ?>">
+                                            <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
+                                            <button type="submit" class="text-red-600 hover:text-red-400 transition-colors">Delete</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
                         <tr>
-                            <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($category["name"]); ?></td>
-                            <td class="border text-center border-gray-300 px-4 py-2">
-                                <div class="flex gap-3 justify-center text-sm">
-                                    <!-- Edit Category -->
-                                    <a href="/admin/categories/edit/<?php echo $category["id"]; ?>?csrf_token=<?php echo $csrf_token; ?>" class="text-indigo-600 hover:text-indigo-400 transition-colors">Edit</a>
-                                    <!-- Delete Category -->
-                                    <a href="/admin/categories/delete/<?php echo $category["id"]; ?>?csrf_token=<?php echo $csrf_token; ?>" class="text-red-600 hover:text-red-400 transition-colors">Delete</a>
-                                </div>
-                            </td>
+                            <td colspan="2" class="border border-gray-300 px-4 py-2 text-center">No categories found.</td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
@@ -247,7 +256,8 @@ require_once realpath(__DIR__ . '/../layout/header.php');
                     <!-- Add New Tag Form -->
                     <tr>
                         <td class="border border-gray-300 px-4 py-2">
-                            <form method="POST" action="/admin/tags/add" id="addTagForm">
+                            <form method="POST" action="<?php echo url('/users/AdminDash'); ?>" id="addTagForm">
+                                <input type="hidden" name="action" value="add_tag">
                                 <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
                                 <input type="text" name="tags" placeholder="New Tags (comma-separated)" class="w-full text-black px-2 py-1 border border-gray-300">
                             </form>
@@ -258,24 +268,37 @@ require_once realpath(__DIR__ . '/../layout/header.php');
                     </tr>
 
                     <!-- Display Existing Tags -->
-                    <?php foreach ($tags as $tag): ?>
+                    <?php if (!empty($tags)): ?>
+                        <?php foreach ($tags as $tag): ?>
+                            <tr>
+                                <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($tag["name"]); ?></td>
+                                <td class="border text-center border-gray-300 px-4 py-2">
+                                    <div class="flex gap-3 justify-center text-sm">
+                                        <!-- Edit Tag -->
+                                        <a href="<?php echo url('/users/AdminDash'); ?>?action=edit_tag&id=<?php echo $tag['id']; ?>" class="text-indigo-600 hover:text-indigo-400 transition-colors">Edit</a>
+                                        <!-- Delete Tag -->
+                                        <form method="POST" action="<?php echo url('/users/AdminDash'); ?>" class="inline">
+                                            <input type="hidden" name="action" value="delete_tag">
+                                            <input type="hidden" name="id" value="<?php echo $tag['id']; ?>">
+                                            <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
+                                            <button type="submit" class="text-red-600 hover:text-red-400 transition-colors">Delete</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
                         <tr>
-                            <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($tag["name"]); ?></td>
-                            <td class="border text-center border-gray-300 px-4 py-2">
-                                <div class="flex gap-3 justify-center text-sm">
-                                    <!-- Edit Tag -->
-                                    <a href="/admin/tags/edit/<?php echo $tag["id"]; ?>?csrf_token=<?php echo $csrf_token; ?>" class="text-indigo-600 hover:text-indigo-400 transition-colors">Edit</a>
-                                    <!-- Delete Tag -->
-                                    <a href="/admin/tags/delete/<?php echo $tag["id"]; ?>?csrf_token=<?php echo $csrf_token; ?>" class="text-red-600 hover:text-red-400 transition-colors">Delete</a>
-                                </div>
-                            </td>
+                            <td colspan="2" class="border border-gray-300 px-4 py-2 text-center">No tags found.</td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+
 
 <?php require_once realpath(__DIR__ . '/../layout/footer.php'); ?>
 </body>
