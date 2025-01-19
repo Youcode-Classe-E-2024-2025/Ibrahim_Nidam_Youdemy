@@ -7,10 +7,10 @@ use AdminModel\CategoryModel;
 class AdminController extends UserController {
 
     public function adminDash() {
-
         $editingCategory = null;
         $editingTag = null;
-    
+
+        // Handle editing category or tag
         if (isset($_GET['action']) && $_GET['action'] === 'edit_category') {
             $id = $_GET['id'] ?? null;
             if ($id) {
@@ -24,6 +24,7 @@ class AdminController extends UserController {
             }
         }
 
+        // Prepare data for the view
         $data = [
             "categories" => $this->categories->getAllCats(),
             "tags" => $this->tags->getAllTags(),
@@ -34,8 +35,11 @@ class AdminController extends UserController {
             "course_with_most_students" => $this->stats->getCourseWithMostStudents(),
             "top_teachers" => $this->stats->getTopTeachers(),
             "csrf_token" => $this->security->generateCsrfToken(),
+            "pendingTeachers" => $this->teacherModel->getPendingTeachers(),
+            "pendingCourses" => $this->courseModel->getPendingCourses(),
         ];
 
+        // Render the admin dashboard view
         $this->showView("users/AdminDash", $data);
     }
 
@@ -47,6 +51,8 @@ class AdminController extends UserController {
         }
 
         $action = $_POST['action'] ?? '';
+        $id = $_POST['id'] ?? '';
+
         switch ($action) {
             case 'add_category':
                 $name = $_POST['name'] ?? '';
@@ -58,7 +64,6 @@ class AdminController extends UserController {
                 break;
 
             case 'delete_category':
-                $id = $_POST['id'] ?? '';
                 if ($this->categories->deleteCats($id)) {
                     $this->setFlash("success", "Category deleted successfully!");
                 } else {
@@ -69,45 +74,76 @@ class AdminController extends UserController {
             case 'add_tag':
                 $tags = explode(',', $_POST['tags'] ?? '');
                 $tags = array_map('trim', $tags);
-                if ($this->tags->addTags($tags)) {
+                if (!$this->tags->addTags($tags)) {
                     $this->setFlash("success", "Tags added successfully!");
                 } else {
-                    // $this->setFlash("error", "Failed to add tags.");
+                    $this->setFlash("error", "Failed to add tags.");
                 }
                 break;
 
             case 'delete_tag':
-                $id = $_POST['id'] ?? '';
                 if ($this->tags->deleteTag($id)) {
                     $this->setFlash("success", "Tag deleted successfully!");
                 } else {
                     $this->setFlash("error", "Failed to delete tag.");
                 }
                 break;
+
             case 'update_category':
-                $id   = $_POST['id'] ?? '';
                 $name = $_POST['name'] ?? '';
-                if ($this->categories->updateCats($id, $name)) {
+                if (!$this->categories->updateCats($id, $name)) {
                     $this->setFlash("success", "Category updated successfully!");
                 } else {
-                    // $this->setFlash("error", "Failed to update category.");
+                    $this->setFlash("error", "Failed to update category.");
                 }
                 break;
+
             case 'update_tag':
-                $id   = $_POST['id'] ?? '';
                 $name = $_POST['name'] ?? '';
-                if ($this->tags->updateTag($id, $name)) {
+                if (!$this->tags->updateTag($id, $name)) {
                     $this->setFlash("success", "Tag updated successfully!");
                 } else {
-                    // $this->setFlash("error", "Failed to update tag.");
+                    $this->setFlash("error", "Failed to update tag.");
                 }
                 break;
-                
+
+            case 'approve_teacher':
+                if (!$this->teacherModel->approveTeacher($id)) {
+                    $this->setFlash("success", "Teacher approved successfully!");
+                } else {
+                    $this->setFlash("error", "Failed to approve teacher.");
+                }
+                break;
+
+            case 'reject_teacher':
+                if ($this->teacherModel->rejectTeacher($id)) {
+                    $this->setFlash("success", "Teacher rejected successfully!");
+                } else {
+                    $this->setFlash("error", "Failed to reject teacher.");
+                }
+                break;
+
+            case 'approve_course':
+                if (!$this->courseModel->approveCourse($id)) {
+                    $this->setFlash("success", "Course approved successfully!");
+                } else {
+                    $this->setFlash("error", "Failed to approve course.");
+                }
+                break;
+
+            case 'reject_course':
+                if ($this->courseModel->rejectCourse($id)) {
+                    $this->setFlash("success", "Course rejected successfully!");
+                } else {
+                    $this->setFlash("error", "Failed to reject course.");
+                }
+                break;
 
             default:
                 $this->setFlash("error", "Invalid action.");
         }
 
+        // Redirect back to the admin dashboard after handling the action
         $this->redirect("../users/AdminDash");
     }
 }

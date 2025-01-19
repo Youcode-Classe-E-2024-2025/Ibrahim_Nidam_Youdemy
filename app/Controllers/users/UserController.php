@@ -3,7 +3,9 @@
 
     use AdminModel\CategoryModel;
     use AdminModel\TagsModel;
+    use AdminModel\TeacherModel;
     use Core\Controller;
+    use CourseModel\CourseModel;
     use Middleware\CsrfMiddleware;
     use Model\StatisticsModel;
     use Security\Security;
@@ -16,6 +18,8 @@
         protected $stats;
         protected $tags;
         protected $categories;
+        protected $courseModel;
+        protected $teacherModel;
 
         public function __construct(){
             $this->userModel = new UserModel();
@@ -24,6 +28,8 @@
             $this->stats = new StatisticsModel();
             $this->tags = new TagsModel();
             $this->categories = new CategoryModel();
+            $this->courseModel = new CourseModel();
+            $this->teacherModel = new TeacherModel();
         }
 
         public function registerStudent(){

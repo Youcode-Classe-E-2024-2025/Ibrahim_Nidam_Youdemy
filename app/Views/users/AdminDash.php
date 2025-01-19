@@ -88,19 +88,23 @@ require_once realpath(__DIR__ . '/../layout/header.php');
         <div class="max-h-64 overflow-y-auto">
             <table class="w-full table-fixed">
                 <tbody>
+                    <?php foreach ($pendingTeachers as $teacher): ?>
                     <tr class="border-b border-border">
-                        <td class="py-4 px-4 w-1/4">John Doe</td>
-                        <td class="py-4 px-4 w-1/4">john@example.com</td>
+                        <td class="py-4 px-4 w-1/4"><?= htmlspecialchars($teacher['name']) ?></td>
+                        <td class="py-4 px-4 w-1/4"><?= htmlspecialchars($teacher['email']) ?></td>
                         <td class="py-4 px-4 w-1/4">
                             <span class="bg-chart-4/20 text-chart-4 px-2 py-1 rounded-sm w-20 text-center block">Pending</span>
                         </td>
                         <td class="py-4 px-4 w-1/4">
-                            <div>
-                                <button class="bg-chart-2 text-white px-4 py-1 rounded-sm mb-2">Approve</button>
-                                <button class="bg-destructive text-white px-4 py-1 rounded-sm">Reject</button>
-                            </div>
+                            <form method="POST" action="<?php echo url('/users/AdminDash'); ?>">
+                                <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+                                <input type="hidden" name="id" value="<?= $teacher['id'] ?>">
+                                <button type="submit" name="action" value="approve_teacher" class="bg-chart-2 text-white px-4 py-1 rounded-sm mb-2">Approve</button>
+                                <button type="submit" name="action" value="reject_teacher" class="bg-destructive text-white px-4 py-1 rounded-sm">Reject</button>
+                            </form>
                         </td>
                     </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -125,19 +129,23 @@ require_once realpath(__DIR__ . '/../layout/header.php');
         <div class="max-h-64 overflow-y-auto">
             <table class="w-full table-fixed">
                 <tbody>
+                    <?php foreach ($pendingCourses as $course): ?>
                     <tr class="border-b border-border">
-                        <td class="py-4 px-4 w-1/4">John Doe</td>
-                        <td class="py-4 px-4 w-1/4">john@example.com</td>
+                        <td class="py-4 px-4 w-1/4"><?= htmlspecialchars($course['title']) ?></td>
+                        <td class="py-4 px-4 w-1/4"><?= htmlspecialchars($course['teacher_email']) ?></td>
                         <td class="py-4 px-4 w-1/4">
                             <span class="bg-chart-4/20 text-chart-4 px-2 py-1 rounded-sm w-20 text-center block">Pending</span>
                         </td>
                         <td class="py-4 px-4 w-1/4">
-                            <div>
-                                <button class="bg-chart-2 text-white px-4 py-1 rounded-sm mb-2">Approve</button>
-                                <button class="bg-destructive text-white px-4 py-1 rounded-sm">Reject</button>
-                            </div>
+                            <form method="POST" action="<?php echo url('/users/AdminDash'); ?>">
+                                <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+                                <input type="hidden" name="id" value="<?= $course['id'] ?>">
+                                <button type="submit" name="action" value="approve_course" class="bg-chart-2 text-white px-4 py-1 rounded-sm mb-2">Approve</button>
+                                <button type="submit" name="action" value="reject_course" class="bg-destructive text-white px-4 py-1 rounded-sm">Reject</button>
+                            </form>
                         </td>
                     </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
