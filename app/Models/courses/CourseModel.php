@@ -118,4 +118,33 @@ class CourseModel extends Model {
     public function rejectCourse($id) {
         return $this->delete('courses', ['id' => $id]);
     }
+
+    public function getCoursesByTeacher($teacherId) {
+        $sql = "
+            SELECT 
+                c.id,
+                c.title,
+                c.description,
+                c.content_type,
+                c.content_path,
+                c.category_id,
+                c.rating,
+                c.approval,
+                cat.name AS category_name
+            FROM 
+                courses c
+            LEFT JOIN 
+                categories cat ON c.category_id = cat.id
+            WHERE 
+                c.teacher_id = :teacher_id
+        ";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([":teacher_id" => $teacherId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteCourse($id) {
+        return $this->delete("courses", ["id" => $id]);
+    }
 }
