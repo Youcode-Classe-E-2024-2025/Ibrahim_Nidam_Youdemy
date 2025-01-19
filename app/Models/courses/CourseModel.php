@@ -75,7 +75,7 @@ class CourseModel extends Model {
             if($tagRow){
                 $tagId = $tagRow[0]["id"];
 
-                $this->create("courses_tags",  [
+                $this->create("course_tags",  [
                     "course_id" => $courseId,
                     "tag_id" => $tagId
                 ]);
@@ -146,5 +146,17 @@ class CourseModel extends Model {
 
     public function deleteCourse($id) {
         return $this->delete("courses", ["id" => $id]);
+    }
+
+    public function getAllCategories() {
+        $sql = "SELECT * FROM categories";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getAllTags() {
+        $sql = "SELECT * FROM tags";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

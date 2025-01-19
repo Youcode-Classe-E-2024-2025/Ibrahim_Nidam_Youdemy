@@ -61,22 +61,63 @@ class CoursesController extends Controller {
         ]);
     }
 
-    public function addCourse(){
-        if($_SERVER["REQUEST_METHOD"] === "POST"){
+    public function addCourse() {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $this->csrfMiddleware->handle($_POST);
 
-            $teacherId = $_SESSION["id"] ?? "";
-            $title = $_POST["title"] ?? "";
-            $description = $_POST["description"] ?? "";
-            $contentType = $_POST["content_type"] ?? "";
-            $contentPath = $_POST["content_path"] ?? "";
-            $categoryId = $_POST["category_id"] ?? "";
-            $tags = isset($_POST["tags"]) ? explode(",", $_POST["tags"]) : [];
+            $teacherId = $_SESSION['id'] ?? null;
+            $title = $_POST['title'] ?? '';
+            $description = $_POST['description'] ?? '';
+            $contentType = $_POST['content_type'] ?? '';
+            $categoryId = $_POST['category_id'] ?? '';
+            $tags = $_POST['tags'] ?? [];
 
-            
+            $contentPath = $this->handleFileUpload($_FILES['content_path'], $contentType);
+            if (!$contentPath) {
+                $this->setFlash("error", "Invalid file upload.");
+                return;
+            }
 
+            $courseData = [
+                'teacher_id' => $teacherId,
+                'title' => $title,
+                'description' => $description,
+                'content_type' => $contentType,
+                'content_path' => $contentPath,
+                'category_id' => $categoryId,
+                'rating' => rand(0, 5),
+                'approval' => 'pending',
+            ];
+
+            $courseId = $this->courseModel->createCourse($courseData);
+
+            if ($courseId && !empty($tags)) {
+                $this->courseModel->attachTagsToCourses($courseId, $tags);
+            }
+
+            $this->setFlash("success", "Course added successfully!");
+            $this->redirect("../users/TeacherDash");
         }
-        $this->showView("coursesPage");
+    }
+
+    private function handleFileUpload($file, $contentType) {
+        $uploadDir = __DIR__ . "/../../../storage/uploads/";
+        $allowedTypes = $contentType === 'video' ? ['mp4'] : ['pdf'];
+        $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+        if (!in_array($fileExtension, $allowedTypes)) {
+            $this->setFlash("error", "Make sure you uploaded the right file type.");
+            $this->redirect("../users/TeacherDash");
+        }
+
+        $fileName = uniqid() . "." . $fileExtension;
+        $uploadPath = $uploadDir . $fileName;
+
+        if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
+            return "uploads/" . $fileName;
+        }
+
+        return false;
     }
     
 }

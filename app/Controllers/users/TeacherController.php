@@ -11,11 +11,16 @@ class TeacherController extends UserController {
         $pending_courses = $this->stats->getPendingCoursesByTeacher($teacherId);
         $courses = $this->courseModel->getCoursesByTeacher($teacherId);
 
+        $categories = $this->courseModel->getAllCategories();
+        $tags = $this->courseModel->getAllTags();
+
         $data = [
             'total_courses' => $total_courses,
             'total_students' => $total_students,
             'pending_courses' => $pending_courses,
             'courses' => $courses,
+            'categories' => $categories,
+            'tags' => $tags,
             'csrf_token' => $this->security->generateCsrfToken(),
         ];
 

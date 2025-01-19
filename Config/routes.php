@@ -23,6 +23,7 @@ App::$router->get("/users/StudentProfile", [StudentController::class, "studentPr
 // Courses
 App::$router->get("/coursesPage", [CoursesController::class, "courses"]);
 App::$router->get("/search", [CoursesController::class, "search"]);
+App::$router->post("/users/TeacherDash", [CoursesController::class, "addCourse"]);
 
 // Authentication
 App::$router->post("/login", [UserController::class, "login"]);
