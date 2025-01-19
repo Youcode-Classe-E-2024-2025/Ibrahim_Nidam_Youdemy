@@ -12,8 +12,8 @@
     use UsersModel\UserModel;
 
     class UserController extends Controller {
-        private $userModel;
-        private $csrfMiddleware;
+        protected $userModel;
+        protected $csrfMiddleware;
         protected $security;
         protected $stats;
         protected $tags;

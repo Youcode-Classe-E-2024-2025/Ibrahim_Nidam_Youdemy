@@ -2,15 +2,20 @@
 
 namespace UsersController;
 
-use AdminModel\CategoryModel;
-
 class AdminController extends UserController {
 
     public function adminDash() {
         $editingCategory = null;
         $editingTag = null;
 
-        // Handle editing category or tag
+        $allUsers = $this->userModel->getAllUsers();
+
+        $groupedUsers = [
+            'admin' => array_filter($allUsers, fn($user) => $user['role'] === 'admin'),
+            'teacher' => array_filter($allUsers, fn($user) => $user['role'] === 'teacher'),
+            'student' => array_filter($allUsers, fn($user) => $user['role'] === 'student'),
+        ];
+
         if (isset($_GET['action']) && $_GET['action'] === 'edit_category') {
             $id = $_GET['id'] ?? null;
             if ($id) {
@@ -37,6 +42,7 @@ class AdminController extends UserController {
             "csrf_token" => $this->security->generateCsrfToken(),
             "pendingTeachers" => $this->teacherModel->getPendingTeachers(),
             "pendingCourses" => $this->courseModel->getPendingCourses(),
+            "groupedUsers" => $groupedUsers,
         ];
 
         // Render the admin dashboard view
@@ -138,12 +144,34 @@ class AdminController extends UserController {
                     $this->setFlash("error", "Failed to reject course.");
                 }
                 break;
+            case 'suspend_user':
+                if (!$this->userModel->suspendUser($id)) {
+                    $this->setFlash("success", "User suspended successfully!");
+                } else {
+                    $this->setFlash("error", "Failed to suspend user.");
+                }
+                break;
+
+            case 'activate_user':
+                if (!$this->userModel->activateUser($id)) {
+                    $this->setFlash("success", "User activated successfully!");
+                } else {
+                    $this->setFlash("error", "Failed to activate user.");
+                }
+                break;
+
+            case 'delete_user':
+                if ($this->userModel->deleteUser($id)) {
+                    $this->setFlash("success", "User deleted successfully!");
+                } else {
+                    $this->setFlash("error", "Failed to delete user.");
+                }
+                break;
 
             default:
                 $this->setFlash("error", "Invalid action.");
         }
 
-        // Redirect back to the admin dashboard after handling the action
         $this->redirect("../users/AdminDash");
     }
 }

@@ -53,4 +53,20 @@ class UserModel extends Model{
     public function verifyPassword($inputPass, $hashedPass){
         return password_verify($inputPass,$hashedPass);
     }
+
+    public function getAllUsers() {
+        return $this->read($this->table);
+    }
+
+    public function suspendUser($id) {
+        return $this->update($this->table, ['is_active' => 0], ['id' => $id]);
+    }
+    
+    public function activateUser($id) {
+        return $this->update($this->table, ['is_active' => 1], ['id' => $id]);
+    }
+
+    public function deleteUser($id) {
+        return $this->delete($this->table, ['id' => $id]);
+    }
 }
