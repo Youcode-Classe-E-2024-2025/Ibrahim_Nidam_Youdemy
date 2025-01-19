@@ -205,4 +205,36 @@ class CourseModel extends Model {
             }
         }
     }
+
+    public function getCourseDetailsById($courseId) {
+        $sql = "SELECT 
+                    c.id AS course_id,
+                    c.title AS course_title,
+                    c.description AS course_description,
+                    c.content_type AS course_content_type,
+                    c.content_path AS course_content_path,
+                    c.rating AS course_rating,
+                    cat.name AS category_name,
+                    u.name AS instructor_name,
+                    GROUP_CONCAT(t.name ORDER BY t.name SEPARATOR ', ') AS tags
+                FROM 
+                    courses c
+                LEFT JOIN 
+                    categories cat ON c.category_id = cat.id
+                LEFT JOIN 
+                    users u ON c.teacher_id = u.id
+                LEFT JOIN 
+                    course_tags ct ON c.id = ct.course_id
+                LEFT JOIN 
+                    tags t ON ct.tag_id = t.id
+                WHERE 
+                    c.id = :courseId
+                GROUP BY 
+                    c.id
+        ";
+    
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':courseId' => $courseId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

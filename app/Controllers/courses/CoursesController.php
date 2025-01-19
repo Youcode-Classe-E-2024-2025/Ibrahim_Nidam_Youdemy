@@ -3,8 +3,6 @@
 namespace CourseController;
 
 use Core\Controller;
-use CourseModel\DocumentCourse;
-use CourseModel\VideoCourse;
 use Middleware\CsrfMiddleware;
 
 class CoursesController extends Controller {
@@ -168,5 +166,57 @@ class CoursesController extends Controller {
     
         $this->redirect("../../users/TeacherDash");
     }
+
+    public function courseDescription($courseId) {
+        if (!isset($_SESSION['id'])) {
+            $this->setFlash("error", "You need to Sign in First!");
+            $this->redirect("../../../Public");
+            return;
+        }
+    
+        // Fetch the course details from the database
+        $course = $this->courseModel->getCourseDetailsById($courseId);
+    
+        if (!$course) {
+            $this->setFlash("error", "No Course With that ID!");
+            $this->redirect("../../../Public");
+            return;
+        }
+    
+        $isEnrolled = false;
+    
+        if ($_SESSION['role'] === 'student') {
+            $userId = $_SESSION['id'];
+    
+            $enrollment = $this->courseModel->read('enrollments', [
+                'course_id' => $courseId,
+                'student_id' => $userId
+            ]);
+    
+            if (!$enrollment) {
+                $this->courseModel->create('enrollments', [
+                    'course_id' => $courseId,
+                    'student_id' => $userId
+                ]);
+                $isEnrolled = true; 
+            } else {
+                $isEnrolled = true;
+            }
+    
+            if (!isset($_SESSION['enrolled_courses'])) {
+                $_SESSION['enrolled_courses'] = [];
+            }
+    
+            if (!in_array($courseId, $_SESSION['enrolled_courses'])) {
+                $_SESSION['enrolled_courses'][] = $courseId;
+            }
+        }
+    
+        $this->showView("layout/courseDescription", [
+            "course" => $course,
+            "isEnrolled" => $isEnrolled
+        ]);
+    }
+    
     
 }

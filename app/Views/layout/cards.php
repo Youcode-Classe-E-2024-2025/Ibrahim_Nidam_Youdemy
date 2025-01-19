@@ -28,6 +28,25 @@ function renderCard($data) {
                 <span class="text-chart-4 ml-1"><?php echo generateStars($data['rating']); ?></span>
             </div>
         </div>
+        <div class="p-4">
+        <?php
+            $courseId = $data['id'];
+            $isEnrolled = isset($_SESSION['enrolled_courses']) && in_array($courseId, $_SESSION['enrolled_courses']);
+            ?>
+
+            <?php if ($isEnrolled): ?>
+                <a href="layout/courseDescription/<?php echo urlencode($courseId); ?>" 
+                class="w-full bg-indigo-500 text-white px-4 py-2 rounded-md text-center block hover:bg-primary-dark transition">
+                    Continue Course
+                </a>
+            <?php else: ?>
+                <a href="layout/courseDescription/<?php echo urlencode($courseId); ?>" 
+                class="w-full bg-primary text-white px-4 py-2 rounded-md text-center block hover:bg-primary-dark transition">
+                    Enroll Now
+                </a>
+            <?php endif; ?>
+
+        </div>
     </div>
     <?php
 }

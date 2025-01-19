@@ -13,30 +13,30 @@
             $this->routes["POST"][$uri] = $controller;
         }
 
-        public function route($uri, $method){
-            // $uri = rtrim(parse_url($uri, PHP_URL_PATH), '/');
-            // echo "Routing: {$uri} with method: {$method}";
-            // class_exists && method_exists
-            // $controller = new Controller()
-            // call_user_func([$controller, $method]);
-            
-            if(array_key_exists($method, $this->routes) && array_key_exists($uri, $this->routes[$method])){
-                $controller = $this->routes[$method][$uri];
-
-                if(is_array($controller)){
-                    [$class, $method] = $controller;
-
-                    if (!class_exists($class)) {
-                        die("Class not found: $class");
+        public function route($uri, $method) {
+            $routes = $this->routes[$method] ?? [];
+        
+            foreach ($routes as $route => $controller) {
+                $pattern = preg_replace('/\{[a-zA-Z0-9_]+\}/', '([0-9]+)', $route);
+                if (preg_match("#^$pattern$#", $uri, $matches)) {
+                    array_shift($matches);
+        
+                    if (is_array($controller)) {
+                        [$class, $method] = $controller;
+        
+                        if (!class_exists($class)) {
+                            die("Class not found: $class");
+                        }
+        
+                        $controller = new $class();
+                        return call_user_func_array([$controller, $method], $matches);
                     }
-
-                    $controller = new $class();
-                    return call_user_func([$controller, $method]);
                 }
             }
-
+        
             $this->handleError(404);
         }
+        
 
         public function handleError($code){
 
@@ -50,7 +50,7 @@
                     require_once __DIR__ . "/../Views/errors/403.php";
                 break;
                 default : 
-                echo "{$code}";
+                // echo "{$code}";
             }
 
             exit();

@@ -14,6 +14,7 @@ class Controller {
     protected $statsModel;
     protected $categoryModel;
     protected $tagsModel;
+    protected $router;
 
     public function __construct(){
         $this->security = new Security();
@@ -21,6 +22,7 @@ class Controller {
         $this->statsModel = new StatisticsModel();
         $this->categoryModel = new CategoryModel();
         $this->tagsModel = new TagsModel();
+        $this->router = new Router();
     }
 
     protected function showView($view, $data = []){
