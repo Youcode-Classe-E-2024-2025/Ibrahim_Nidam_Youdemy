@@ -29,7 +29,6 @@ class AdminController extends UserController {
             }
         }
 
-        // Prepare data for the view
         $data = [
             "categories" => $this->categories->getAllCats(),
             "tags" => $this->tags->getAllTags(),

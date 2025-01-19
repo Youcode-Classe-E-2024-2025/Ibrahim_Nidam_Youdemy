@@ -174,7 +174,6 @@ class CoursesController extends Controller {
             return;
         }
     
-        // Fetch the course details from the database
         $course = $this->courseModel->getCourseDetailsById($courseId);
     
         if (!$course) {
