@@ -33,4 +33,8 @@ class CategoryModel extends Model {
     public function deleteCats($id){
         return $this->delete("categories", ["id" => $id]);
     }
+
+    public function getCatById($id) {
+        return $this->read("categories", ["id" => $id]);
+    }
 }

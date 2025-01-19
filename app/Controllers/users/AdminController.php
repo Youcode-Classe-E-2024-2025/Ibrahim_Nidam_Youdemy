@@ -2,13 +2,34 @@
 
 namespace UsersController;
 
+use AdminModel\CategoryModel;
+
 class AdminController extends UserController {
 
     public function adminDash() {
+
+        $editingCategory = null;
+        $editingTag = null;
+    
+        if (isset($_GET['action']) && $_GET['action'] === 'edit_category') {
+            $id = $_GET['id'] ?? null;
+            if ($id) {
+                $editingCategory = $this->categories->getCatById($id);
+            }
+        }
+        if (isset($_GET['action']) && $_GET['action'] === 'edit_tag') {
+            $id = $_GET['id'] ?? null;
+            if ($id) {
+                $editingTag = $this->tags->getTagById($id);
+            }
+        }
+
         $data = [
             "categories" => $this->categories->getAllCats(),
             "tags" => $this->tags->getAllTags(),
             "total_courses" => $this->stats->getTotalCourses(),
+            "editingCategory" => $editingCategory,
+            'editingTag' => $editingTag,
             "courses_by_category" => $this->stats->getCoursesByCategory(),
             "course_with_most_students" => $this->stats->getCourseWithMostStudents(),
             "top_teachers" => $this->stats->getTopTeachers(),
@@ -63,6 +84,25 @@ class AdminController extends UserController {
                     $this->setFlash("error", "Failed to delete tag.");
                 }
                 break;
+            case 'update_category':
+                $id   = $_POST['id'] ?? '';
+                $name = $_POST['name'] ?? '';
+                if ($this->categories->updateCats($id, $name)) {
+                    $this->setFlash("success", "Category updated successfully!");
+                } else {
+                    // $this->setFlash("error", "Failed to update category.");
+                }
+                break;
+            case 'update_tag':
+                $id   = $_POST['id'] ?? '';
+                $name = $_POST['name'] ?? '';
+                if ($this->tags->updateTag($id, $name)) {
+                    $this->setFlash("success", "Tag updated successfully!");
+                } else {
+                    // $this->setFlash("error", "Failed to update tag.");
+                }
+                break;
+                
 
             default:
                 $this->setFlash("error", "Invalid action.");

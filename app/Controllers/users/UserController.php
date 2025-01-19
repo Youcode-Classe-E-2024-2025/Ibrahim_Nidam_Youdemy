@@ -1,12 +1,12 @@
 <?php
     namespace UsersController;
 
-use AdminModel\CategoryModel;
-use AdminModel\TagsModel;
-use Core\Controller;
+    use AdminModel\CategoryModel;
+    use AdminModel\TagsModel;
+    use Core\Controller;
     use Middleware\CsrfMiddleware;
-use Model\StatisticsModel;
-use Security\Security;
+    use Model\StatisticsModel;
+    use Security\Security;
     use UsersModel\UserModel;
 
     class UserController extends Controller {

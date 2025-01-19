@@ -49,4 +49,8 @@ class TagsModel extends Model {
     public function deleteTag($id){
         return $this->delete("tags", ["id" => $id]);
     }
+
+    public function getTagById($id) {
+        return $this->read("tags", ["id" => $id]);
+    }
 }
