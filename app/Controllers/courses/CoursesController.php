@@ -104,20 +104,69 @@ class CoursesController extends Controller {
         $uploadDir = __DIR__ . "/../../../storage/uploads/";
         $allowedTypes = $contentType === 'video' ? ['mp4'] : ['pdf'];
         $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-
+    
         if (!in_array($fileExtension, $allowedTypes)) {
             $this->setFlash("error", "Make sure you uploaded the right file type.");
             $this->redirect("../users/TeacherDash");
+            return false;
         }
-
+    
         $fileName = uniqid() . "." . $fileExtension;
         $uploadPath = $uploadDir . $fileName;
-
+    
         if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
             return "uploads/" . $fileName;
         }
-
+    
         return false;
+    }
+
+    public function updateCourse() {
+        $csrfToken = $_POST['csrf_token'] ?? '';
+        if (!$this->security->verifyCsrfToken($csrfToken)) {
+            $this->setFlash("error", "Invalid CSRF token.");
+            $this->redirect("../../users/TeacherDash");
+        }
+    
+        $courseId = $_POST['id'] ?? '';
+        $title = $_POST['title'] ?? '';
+        $description = $_POST['description'] ?? '';
+        $contentType = $_POST['content_type'] ?? '';
+        $categoryId = $_POST['category_id'] ?? '';
+        $tags = $_POST['tags'] ?? [];
+    
+        $contentPath = null;
+        if (!empty($_FILES['content_path']['name'])) {
+            $contentPath = $this->handleFileUpload($_FILES['content_path'], $contentType);
+            if (!$contentPath) {
+                $this->setFlash("error", "Invalid file upload.");
+                $this->redirect("../../users/TeacherDash");
+                return;
+            }
+        }
+    
+        $courseData = [
+            'id' => $courseId,
+            'title' => $title,
+            'description' => $description,
+            'content_type' => $contentType,
+            'category_id' => $categoryId,
+        ];
+    
+        if ($contentPath) {
+            $courseData['content_path'] = $contentPath;
+        }
+    
+        if (!$this->courseModel->updateCourse($courseData)) {
+            if (!empty($tags)) {
+                $this->courseModel->updateCourseTags($courseId, $tags);
+            }
+            $this->setFlash("success", "Course updated successfully!");
+        } else {
+            $this->setFlash("error", "Failed to update course.");
+        }
+    
+        $this->redirect("../../users/TeacherDash");
     }
     
 }

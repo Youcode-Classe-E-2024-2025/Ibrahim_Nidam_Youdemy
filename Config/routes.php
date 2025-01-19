@@ -17,13 +17,14 @@ App::$router->get("/", [HomeController::class, "index"]);
 App::$router->get("/users/AdminDash", [AdminController::class, "adminDash"]);
 App::$router->post("/users/AdminDash", [AdminController::class, "handleActions"]);
 App::$router->get("/users/TeacherDash", [TeacherController::class, "teacherDash"]);
-App::$router->post("/users/TeacherDash", [TeacherController::class, "handleActions"]);
+App::$router->post("/users/TeacherDash/delete", [TeacherController::class, "handleActions"]);
 App::$router->get("/users/StudentProfile", [StudentController::class, "studentProfile"]);
 
 // Courses
 App::$router->get("/coursesPage", [CoursesController::class, "courses"]);
 App::$router->get("/search", [CoursesController::class, "search"]);
 App::$router->post("/users/TeacherDash", [CoursesController::class, "addCourse"]);
+App::$router->post("/users/TeacherDash/update-course", [CoursesController::class, "updateCourse"]);
 
 // Authentication
 App::$router->post("/login", [UserController::class, "login"]);

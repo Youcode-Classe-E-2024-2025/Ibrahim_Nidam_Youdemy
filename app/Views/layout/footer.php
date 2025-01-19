@@ -1,7 +1,7 @@
 <!-- Footer -->
 <footer class="bg-card py-12">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 text-center gap-8">
                 <div>
                     <h3 class="text-lg font-semibold mb-4">About</h3>
                     <ul class="space-y-2">

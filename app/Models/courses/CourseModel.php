@@ -2,7 +2,6 @@
 
 namespace CourseModel;
 
-
 use Core\Model;
 use PDO;
 
@@ -84,26 +83,25 @@ class CourseModel extends Model {
     }
 
     public function getPendingCourses() {
-        $sql = "
-            SELECT 
-                courses.id,
-                courses.teacher_id,
-                courses.title,
-                courses.description,
-                courses.content_type,
-                courses.content_path,
-                courses.category_id,
-                courses.rating,
-                courses.approval,
-                users.email AS teacher_email
-            FROM 
-                courses
-            JOIN 
-                users 
-            ON 
-                courses.teacher_id = users.id
-            WHERE 
-                courses.approval = 'pending';
+        $sql = "SELECT 
+                    courses.id,
+                    courses.teacher_id,
+                    courses.title,
+                    courses.description,
+                    courses.content_type,
+                    courses.content_path,
+                    courses.category_id,
+                    courses.rating,
+                    courses.approval,
+                    users.email AS teacher_email
+                FROM 
+                    courses
+                JOIN 
+                    users 
+                ON 
+                    courses.teacher_id = users.id
+                WHERE 
+                    courses.approval = 'pending';
         ";
 
         $stmt = $this->db->prepare($sql);
@@ -120,23 +118,22 @@ class CourseModel extends Model {
     }
 
     public function getCoursesByTeacher($teacherId) {
-        $sql = "
-            SELECT 
-                c.id,
-                c.title,
-                c.description,
-                c.content_type,
-                c.content_path,
-                c.category_id,
-                c.rating,
-                c.approval,
-                cat.name AS category_name
-            FROM 
-                courses c
-            LEFT JOIN 
-                categories cat ON c.category_id = cat.id
-            WHERE 
-                c.teacher_id = :teacher_id
+        $sql = "SELECT 
+                    c.id,
+                    c.title,
+                    c.description,
+                    c.content_type,
+                    c.content_path,
+                    c.category_id,
+                    c.rating,
+                    c.approval,
+                    cat.name AS category_name
+                FROM 
+                    courses c
+                LEFT JOIN 
+                    categories cat ON c.category_id = cat.id
+                WHERE 
+                    c.teacher_id = :teacher_id
         ";
 
         $stmt = $this->db->prepare($sql);
@@ -158,5 +155,54 @@ class CourseModel extends Model {
         $sql = "SELECT * FROM tags";
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getCourseById($courseId) {
+        $sql = "SELECT 
+                    c.*, 
+                    GROUP_CONCAT(t.name ORDER BY t.name SEPARATOR ', ') AS tags
+                FROM 
+                    courses c
+                LEFT JOIN 
+                    course_tags ct ON c.id = ct.course_id
+                LEFT JOIN 
+                    tags t ON ct.tag_id = t.id
+                WHERE 
+                    c.id = :courseId
+                GROUP BY 
+                    c.id
+        ";
+    
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':courseId' => $courseId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateCourse($courseData) {
+        $id = $courseData['id'];
+        unset($courseData['id']);
+    
+        return $this->update('courses', $courseData, ['id' => $id]);
+    }
+
+    public function updateCourseTags($courseId, $tags) {
+        $this->delete('course_tags', ['course_id' => $courseId]);
+    
+        foreach ($tags as $tagName) {
+            $tagRow = $this->read('tags', ['name' => $tagName]);
+    
+            if (!$tagRow) {
+                $this->create('tags', ['name' => $tagName]);
+                $tagRow = $this->read('tags', ['name' => $tagName]);
+            }
+    
+            if ($tagRow) {
+                $tagId = $tagRow[0]['id'];
+                $this->create('course_tags', [
+                    'course_id' => $courseId,
+                    'tag_id' => $tagId,
+                ]);
+            }
+        }
     }
 }

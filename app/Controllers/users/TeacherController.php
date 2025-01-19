@@ -50,6 +50,6 @@ class TeacherController extends UserController {
                 $this->setFlash("error", "Invalid action.");
         }
 
-        $this->redirect("../users/TeacherDash");
+        $this->redirect("../../users/TeacherDash");
     }
 }
