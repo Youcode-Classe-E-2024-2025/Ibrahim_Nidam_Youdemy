@@ -9,7 +9,8 @@
 ## Links
 
 - **Presentation Link :** [View Presentation](https://www.canva.com/design/DAGcEVOlLS4/EvMZ7a-xo3pwKxhqKss8JQ/view?utm_content=DAGcEVOlLS4&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hc1fa5432e4)
-- **UML Link :** [View UML](https://lucid.app/lucidchart/a92f7122-610e-4575-b31e-0b7b394ee8bc/edit?viewport_loc=-11%2C-10%2C1629%2C753%2C0_0&invitationId=inv_ff6d6faf-8dd3-4625-969a-597b39f80e55)
+- **UML USE CASE Link :** [View UML USE CASE](https://lucid.app/lucidchart/a92f7122-610e-4575-b31e-0b7b394ee8bc/edit?viewport_loc=-1042%2C-122%2C5344%2C2471%2C0_0&invitationId=inv_ff6d6faf-8dd3-4625-969a-597b39f80e55)
+- **UML CLASS DIAGRAM Link :** [View UML CLASS DIAGRAM](https://lucid.app/lucidchart/e46b6b4e-fcdf-4b91-b6c4-8229c2bd9e40/edit?viewport_loc=-1305%2C-577%2C3818%2C1765%2C0_0&invitationId=inv_71650fc3-5a5f-4c5b-a619-a90eece138e2)
 - **GitHub Repository :** [View on GitHub](https://github.com/Youcode-Classe-E-2024-2025/Ibrahim_Nidam_Youdemy.git)
 
 ### Créé : 13/01/25
