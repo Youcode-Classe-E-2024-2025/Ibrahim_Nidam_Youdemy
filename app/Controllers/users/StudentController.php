@@ -13,16 +13,14 @@ class StudentController extends UserController {
     
         $studentId = $_SESSION['id'];
     
-        // Fetch enrolled course IDs
         $enrollments = $this->courseModel->read('enrollments', ['student_id' => $studentId]);
     
         $courses = [];
         if (!empty($enrollments)) {
-            // Fetch courses one by one if the model cannot handle arrays
             foreach ($enrollments as $enrollment) {
                 $course = $this->courseModel->read('courses', ['id' => $enrollment['course_id']]);
                 if (!empty($course)) {
-                    $courses[] = $course[0]; // Extract the first record
+                    $courses[] = $course[0];
                 }
             }
         }

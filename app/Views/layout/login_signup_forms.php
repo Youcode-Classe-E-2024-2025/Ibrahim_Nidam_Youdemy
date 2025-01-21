@@ -160,4 +160,145 @@ document.addEventListener("keyup", function (e) {
         closeForm();
     }
 });
+
+// Form validation configuration
+const VALIDATION_RULES = {
+    email: {
+        pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        message: 'Please enter a valid email address'
+    },
+    password: {
+        pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        message: 'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character'
+    },
+    username: {
+        pattern: /^[a-zA-Z0-9_]{3,20}$/,
+        message: 'Username must be 3-20 characters and can only contain letters, numbers, and underscores'
+    }
+};
+
+// Create error message element
+function createErrorMessage(input, message) {
+    const existingError = input.parentElement.querySelector('.error-message');
+    if (existingError) {
+        existingError.textContent = message;
+        return;
+    }
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message text-red-200 text-sm mt-1';
+    errorDiv.textContent = message;
+    input.parentElement.appendChild(errorDiv);
+}
+
+// Remove error message
+function removeErrorMessage(input) {
+    const errorDiv = input.parentElement.querySelector('.error-message');
+    if (errorDiv) {
+        errorDiv.remove();
+    }
+}
+
+// Validate single input
+function validateInput(input) {
+    // Skip validation for signin form inputs
+    if (input.closest('#signinForm')) {
+        return true;
+    }
+
+    const value = input.value.trim();
+    const inputType = input.type;
+    const inputId = input.id;
+
+    // Required field validation
+    if (input.hasAttribute('required') && !value) {
+        createErrorMessage(input, 'This field is required');
+        return false;
+    }
+
+    // Email validation
+    if (inputType === 'email' && value) {
+        if (!VALIDATION_RULES.email.pattern.test(value)) {
+            createErrorMessage(input, VALIDATION_RULES.email.message);
+            return false;
+        }
+    }
+
+    // Password validation
+    if (inputType === 'password' && value) {
+        if (!VALIDATION_RULES.password.pattern.test(value)) {
+            createErrorMessage(input, VALIDATION_RULES.password.message);
+            return false;
+        }
+
+        // Confirm password validation
+        if (inputId.includes('-password-confirmed')) {
+            const passwordInput = document.getElementById(inputId.replace('-confirmed', ''));
+            if (passwordInput && value !== passwordInput.value) {
+                createErrorMessage(input, 'Passwords do not match');
+                return false;
+            }
+        }
+    }
+
+    // Username validation
+    if (inputId.includes('username') && value) {
+        if (!VALIDATION_RULES.username.pattern.test(value)) {
+            createErrorMessage(input, VALIDATION_RULES.username.message);
+            return false;
+        }
+    }
+
+    removeErrorMessage(input);
+    return true;
+}
+
+// Form submission handler
+function handleFormSubmit(event) {
+    const form = event.target;
+    
+    // Skip validation for signin form
+    if (form.id === 'signinForm') {
+        return true;
+    }
+
+    const inputs = form.querySelectorAll('input:not([type="hidden"])');
+    let isValid = true;
+
+    inputs.forEach(input => {
+        if (!validateInput(input)) {
+            isValid = false;
+        }
+    });
+
+    if (!isValid) {
+        event.preventDefault();
+    }
+}
+
+// Initialize validation
+document.addEventListener('DOMContentLoaded', function() {
+    // Add validation to existing input blur events
+    const originalCheckInput = window.checkInput;
+    window.checkInput = function(input) {
+        originalCheckInput(input);
+        // Only validate if not in signin form
+        if (!input.closest('#signinForm')) {
+            validateInput(input);
+        }
+    };
+
+    // Add form submission validation
+    const forms = ['learnForm', 'teachForm']; // Removed signinForm
+    forms.forEach(formId => {
+        const form = document.getElementById(formId);
+        if (form) {
+            form.addEventListener('submit', handleFormSubmit);
+        }
+    });
+
+    // Add real-time validation on input for registration forms only
+    document.querySelectorAll('#learnForm input:not([type="hidden"]), #teachForm input:not([type="hidden"])').forEach(input => {
+        input.addEventListener('input', () => validateInput(input));
+    });
+});
 </script>
