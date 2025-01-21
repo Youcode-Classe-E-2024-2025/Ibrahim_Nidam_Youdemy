@@ -145,18 +145,6 @@ class CourseModel extends Model {
         return $this->delete("courses", ["id" => $id]);
     }
 
-    public function getAllCategories() {
-        $sql = "SELECT * FROM categories";
-        $stmt = $this->db->query($sql);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getAllTags() {
-        $sql = "SELECT * FROM tags";
-        $stmt = $this->db->query($sql);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
     public function getCourseById($courseId) {
         $sql = "SELECT 
                     c.*, 
@@ -237,4 +225,6 @@ class CourseModel extends Model {
         $stmt->execute([':courseId' => $courseId]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    
 }

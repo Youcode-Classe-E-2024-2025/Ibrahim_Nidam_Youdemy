@@ -161,7 +161,6 @@ document.addEventListener("keyup", function (e) {
     }
 });
 
-// Form validation configuration
 const VALIDATION_RULES = {
     email: {
         pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -177,7 +176,6 @@ const VALIDATION_RULES = {
     }
 };
 
-// Create error message element
 function createErrorMessage(input, message) {
     const existingError = input.parentElement.querySelector('.error-message');
     if (existingError) {
@@ -190,7 +188,6 @@ function createErrorMessage(input, message) {
     input.parentElement.appendChild(errorDiv);
 }
 
-// Remove error message
 function removeErrorMessage(input) {
     const errorDiv = input.parentElement.querySelector('.error-message');
     if (errorDiv) {
@@ -198,9 +195,7 @@ function removeErrorMessage(input) {
     }
 }
 
-// Validate single input
 function validateInput(input) {
-    // Skip validation for signin form inputs
     if (input.closest('#signinForm')) {
         return true;
     }
@@ -209,13 +204,11 @@ function validateInput(input) {
     const inputType = input.type;
     const inputId = input.id;
 
-    // Required field validation
     if (input.hasAttribute('required') && !value) {
         createErrorMessage(input, 'This field is required');
         return false;
     }
 
-    // Email validation
     if (inputType === 'email' && value) {
         if (!VALIDATION_RULES.email.pattern.test(value)) {
             createErrorMessage(input, VALIDATION_RULES.email.message);
@@ -223,14 +216,12 @@ function validateInput(input) {
         }
     }
 
-    // Password validation
     if (inputType === 'password' && value) {
         if (!VALIDATION_RULES.password.pattern.test(value)) {
             createErrorMessage(input, VALIDATION_RULES.password.message);
             return false;
         }
 
-        // Confirm password validation
         if (inputId.includes('-password-confirmed')) {
             const passwordInput = document.getElementById(inputId.replace('-confirmed', ''));
             if (passwordInput && value !== passwordInput.value) {
@@ -240,7 +231,6 @@ function validateInput(input) {
         }
     }
 
-    // Username validation
     if (inputId.includes('username') && value) {
         if (!VALIDATION_RULES.username.pattern.test(value)) {
             createErrorMessage(input, VALIDATION_RULES.username.message);
@@ -252,11 +242,9 @@ function validateInput(input) {
     return true;
 }
 
-// Form submission handler
 function handleFormSubmit(event) {
     const form = event.target;
     
-    // Skip validation for signin form
     if (form.id === 'signinForm') {
         return true;
     }
@@ -275,20 +263,16 @@ function handleFormSubmit(event) {
     }
 }
 
-// Initialize validation
 document.addEventListener('DOMContentLoaded', function() {
-    // Add validation to existing input blur events
     const originalCheckInput = window.checkInput;
     window.checkInput = function(input) {
         originalCheckInput(input);
-        // Only validate if not in signin form
         if (!input.closest('#signinForm')) {
             validateInput(input);
         }
     };
 
-    // Add form submission validation
-    const forms = ['learnForm', 'teachForm']; // Removed signinForm
+    const forms = ['learnForm', 'teachForm']; 
     forms.forEach(formId => {
         const form = document.getElementById(formId);
         if (form) {
@@ -296,7 +280,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Add real-time validation on input for registration forms only
     document.querySelectorAll('#learnForm input:not([type="hidden"]), #teachForm input:not([type="hidden"])').forEach(input => {
         input.addEventListener('input', () => validateInput(input));
     });

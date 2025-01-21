@@ -37,7 +37,7 @@ require_once realpath(__DIR__ . '/../layout/header.php');
         <!-- Pending Courses Card -->
         <div class="bg-card p-6 rounded-sm shadow-sm border border-border">
             <h3 class="text-accent-foreground mb-2">Pending Courses</h3>
-            <p class="text-3xl font-bold text-chart-4"><?php echo $pending_courses; ?></p>
+            <p class="text-3xl font-bold text-chart-4"><?php echo count($pending_courses); ?></p>
         </div>
     </div>
 </div>

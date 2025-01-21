@@ -1,17 +1,26 @@
 <?php
-
 namespace UsersController;
 
-class AdminController extends UserController {
+use UsersModel\AdminModel;
 
-    public function adminDash() {
+class AdminController extends UserController
+{
+    protected $adminModel;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->adminModel = new AdminModel();
+    }
+
+    public function adminDash()
+    {
         $editingCategory = null;
-        $editingTag = null;
+        $editingTag      = null;
 
         $allUsers = $this->userModel->getAllUsers();
-
         $groupedUsers = [
-            'admin' => array_filter($allUsers, fn($user) => $user['role'] === 'admin'),
+            'admin'   => array_filter($allUsers, fn($user) => $user['role'] === 'admin'),
             'teacher' => array_filter($allUsers, fn($user) => $user['role'] === 'teacher'),
             'student' => array_filter($allUsers, fn($user) => $user['role'] === 'student'),
         ];
@@ -22,6 +31,7 @@ class AdminController extends UserController {
                 $editingCategory = $this->categories->getCatById($id);
             }
         }
+
         if (isset($_GET['action']) && $_GET['action'] === 'edit_tag') {
             $id = $_GET['id'] ?? null;
             if ($id) {
@@ -34,7 +44,7 @@ class AdminController extends UserController {
             "tags" => $this->tags->getAllTags(),
             "total_courses" => $this->stats->getTotalCourses(),
             "editingCategory" => $editingCategory,
-            'editingTag' => $editingTag,
+            "editingTag" => $editingTag,
             "courses_by_category" => $this->stats->getCoursesByCategory(),
             "course_with_most_students" => $this->stats->getCourseWithMostStudents(),
             "top_teachers" => $this->stats->getTopTeachers(),
@@ -44,11 +54,11 @@ class AdminController extends UserController {
             "groupedUsers" => $groupedUsers,
         ];
 
-        // Render the admin dashboard view
         $this->showView("users/AdminDash", $data);
     }
 
-    public function handleActions() {
+    public function handleActions()
+    {
         $csrfToken = $_POST['csrf_token'] ?? '';
         if (!$this->security->verifyCsrfToken($csrfToken)) {
             $this->setFlash("error", "Invalid CSRF token.");
@@ -56,7 +66,7 @@ class AdminController extends UserController {
         }
 
         $action = $_POST['action'] ?? '';
-        $id = $_POST['id'] ?? '';
+        $id     = $_POST['id'] ?? '';
 
         switch ($action) {
             case 'add_category':
@@ -143,6 +153,7 @@ class AdminController extends UserController {
                     $this->setFlash("error", "Failed to reject course.");
                 }
                 break;
+
             case 'suspend_user':
                 if (!$this->userModel->suspendUser($id)) {
                     $this->setFlash("success", "User suspended successfully!");

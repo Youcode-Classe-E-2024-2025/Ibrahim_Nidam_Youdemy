@@ -1,33 +1,43 @@
 <?php
 namespace UsersController;
 
-class TeacherController extends UserController {
+use UsersModel\TeacherModel;
 
-    public function teacherDash() {
+class TeacherController extends UserController
+{
+    protected $teacherModel;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->teacherModel = new TeacherModel();
+    }
+
+    public function teacherDash()
+    {
+        if (!isset($_SESSION['id']) || ($_SESSION['role'] !== 'teacher' && $_SESSION['role'] !== 'pending_teacher')) {
+            $this->setFlash("error", "You must be logged in as a teacher to access this page.");
+            $this->redirect("../../Public");
+            return;
+        }
+
         $teacherId = $_SESSION['id'] ?? null;
 
-        $total_courses = $this->stats->getTotalCoursesByTeacher($teacherId);
-        $total_students = $this->stats->getTotalStudentsByTeacher($teacherId);
-        $pending_courses = $this->stats->getPendingCoursesByTeacher($teacherId);
-        $courses = $this->courseModel->getCoursesByTeacher($teacherId);
-
-        $categories = $this->courseModel->getAllCategories();
-        $tags = $this->courseModel->getAllTags();
-
         $data = [
-            'total_courses' => $total_courses,
-            'total_students' => $total_students,
-            'pending_courses' => $pending_courses,
-            'courses' => $courses,
-            'categories' => $categories,
-            'tags' => $tags,
+            'total_courses' => $this->teacherModel->getAllCourses($teacherId),
+            'total_students' => $this->teacherModel->getTotalStudents($teacherId),
+            'pending_courses' => $this->teacherModel->getPendingCourses($teacherId),
+            'courses' => $this->courseModel->getCoursesByTeacher($teacherId),
+            'categories' => $this->categories->getAllCats(),
+            'tags' => $this->tags->getAllTags(),
             'csrf_token' => $this->security->generateCsrfToken(),
         ];
 
         $this->showView("users/TeacherDash", $data);
     }
 
-    public function handleActions() {
+    public function handleActions()
+    {
         $csrfToken = $_POST['csrf_token'] ?? '';
         if (!$this->security->verifyCsrfToken($csrfToken)) {
             $this->setFlash("error", "Invalid CSRF token.");
