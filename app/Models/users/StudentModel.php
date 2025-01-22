@@ -5,6 +5,8 @@ use Model\InterfaceGetCourse;
 
 class StudentModel extends UserModel implements InterfaceGetCourse
 {
+    private $MyCourses;
+
     public function __construct()
     {
         parent::__construct();
@@ -24,6 +26,7 @@ class StudentModel extends UserModel implements InterfaceGetCourse
                 }
             }
         }
-        return $courses;
+        $this->MyCourses = $courses;
+        return $this->MyCourses;
     }
 }

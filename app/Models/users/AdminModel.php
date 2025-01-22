@@ -9,5 +9,7 @@ class AdminModel extends UserModel
         $this->role = "admin";
     }
 
-    
+    public function AdminCreation(){
+        return $this->createUser();
+    }
 }

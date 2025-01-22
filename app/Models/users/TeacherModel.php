@@ -5,6 +5,8 @@ use Model\InterfaceGetCourse;
 
 class TeacherModel extends UserModel implements InterfaceGetCourse
 {
+    private $MyCourses;
+
     public function __construct()
     {
         parent::__construct();
@@ -17,10 +19,10 @@ class TeacherModel extends UserModel implements InterfaceGetCourse
 
     public function getTotalStudents($teacherId)
     {
-        $courses = $this->read('courses', ['teacher_id' => $teacherId]);
+        $this->MyCourses = $this->read('courses', ['teacher_id' => $teacherId]);
         $totalStudents = 0;
 
-        foreach ($courses as $course) {
+        foreach ($this->MyCourses as $course) {
             $enrollments = $this->read('enrollments', ['course_id' => $course['id']]);
             $totalStudents += count($enrollments);
         }
